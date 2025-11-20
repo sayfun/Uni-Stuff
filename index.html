@@ -892,6 +892,7 @@
     function goToChapter(n) {
       currentChapter = n;
       updateChapterUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // CHAPTER 1 – metrics setup
@@ -1027,8 +1028,6 @@
       }
       goToChapter(2);
     });
-
-    renderMetrics();
 
     // CHAPTER 2 logic
     const ch2Useful = document.getElementById("ch2Useful");
@@ -1264,6 +1263,7 @@
     });
 
     // Init
+    renderMetrics();
     updateChapterUI();
   </script>
 </body>
