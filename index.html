@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Curious Case of the Vanishing Engagement</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-alt: #151a2b;
+      --card-bg: #1e2538;
+      --accent: #ffb347;
+      --accent-soft: rgba(255, 179, 71, 0.2);
+      --text-main: #f5f5f7;
+      --text-muted: #a4a9c0;
+      --danger: #ff5c5c;
+      --success: #7ddc8a;
+      --radius: 10px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #18213e 0, #050714 55%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .app {
+      max-width: 980px;
+      width: 100%;
+      background: linear-gradient(145deg, #0d1221, #090b16);
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7);
+      padding: 24px 24px 30px;
+    }
+
+    header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .subtitle {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1 span.icon {
+      font-size: 22px;
+    }
+
+    .chapter-tag {
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+    }
+
+    .top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .progress-bar {
+      margin-top: 8px;
+      height: 4px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), #ffd38d);
+      transition: width 0.3s ease-out;
+    }
+
+    .intro-card {
+      background: rgba(10, 15, 32, 0.95);
+      border-radius: 12px;
+      padding: 14px 16px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      margin-bottom: 18px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .intro-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+      color: var(--accent);
+    }
+
+    .section-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin: 18px 0 10px;
+    }
+
+    .chapter-screen {
+      display: none;
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .chapter-screen.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 10px 11px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      cursor: pointer;
+      position: relative;
+      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
+        border-color 0.12s ease-out, background 0.12s ease-out;
+      font-size: 13px;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+      border-color: rgba(255, 179, 71, 0.5);
+    }
+
+    .metric-card.selected {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(255, 179, 71, 0.7),
+        0 14px 30px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(
+        145deg,
+        rgba(255, 179, 71, 0.15),
+        rgba(12, 18, 40, 0.98)
+      );
+    }
+
+    .metric-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .metric-id {
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .metric-text {
+      font-size: 13px;
+      line-height: 1.35;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .metric-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .metric-radio {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .metric-radio-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: transparent;
+    }
+
+    .metric-card.selected .metric-radio {
+      border-color: var(--accent);
+    }
+
+    .metric-card.selected .metric-radio-dot {
+      background: var(--accent);
+    }
+
+    .task-box {
+      background: var(--bg-alt);
+      border-radius: var(--radius);
+      padding: 12px 14px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 14px;
+      font-size: 13px;
+      color: var(--text-main);
+    }
+
+    .task-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+      font-size: 13px;
+    }
+
+    .task-text {
+      color: var(--text-muted);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      font-size: 13px;
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    textarea,
+    select,
+    input[type="text"] {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #050714;
+      color: var(--text-main);
+      padding: 7px 9px;
+      font-size: 13px;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    textarea:focus,
+    select:focus,
+    input[type="text"]:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(255, 179, 71, 0.4);
+    }
+
+    select {
+      height: 32px;
+    }
+
+    .helper-text {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-top: 6px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      border-radius: 999px;
+      padding: 7px 16px;
+      border: none;
+      font-size: 13px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #211000;
+      font-weight: 600;
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+
+    .status {
+      font-size: 12px;
+      margin-top: 6px;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(9, 32, 20, 0.95);
+      border: 1px solid rgba(101, 214, 145, 0.5);
+      font-size: 13px;
+    }
+
+    .summary-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .summary-line {
+      margin-bottom: 4px;
+    }
+
+    .chapter-nav {
+      margin-top: 14px;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .chapter-nav p {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .btn-next {
+      background: transparent;
+      border-radius: 999px;
+      padding: 7px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: var(--text-main);
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-next span {
+      font-size: 14px;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .character-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 10px 11px 11px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+    }
+
+    .character-name {
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .character-role {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .character-quote {
+      font-style: italic;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .chart-list {
+      background: var(--bg-alt);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      color: var(--text-main);
+      margin-bottom: 14px;
+    }
+
+    .chart-item {
+      margin-bottom: 6px;
+    }
+
+    .chart-label {
+      font-weight: 600;
+    }
+
+    .final-output {
+      width: 100%;
+      min-height: 160px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      background: #050714;
+      color: var(--text-main);
+      padding: 8px 9px;
+      font-size: 12px;
+      resize: vertical;
+      white-space: pre-wrap;
+    }
+
+    @media (max-width: 640px) {
+      .app {
+        padding: 16px 14px 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="subtitle">Analytics Adventure</div>
+      <div class="top-row">
+        <h1>
+          <span class="icon">🧭</span>
+          <span>The Curious Case of the Vanishing Engagement</span>
+        </h1>
+        <div class="chapter-tag" id="chapterTag">Chapter 1 of 4</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+    </header>
+
+    <!-- CHAPTER 1 -->
+    <section id="chapter-1" class="chapter-screen active">
+      <div class="intro-card">
+        <div class="intro-title">Chapter 1 · The Island of Misleading Metrics 🏝️</div>
+        <p>
+          Your analytics ship crashes on the shores of Analytics Island. The sand is
+          warm, the Wi-Fi is questionable, and the only things that washed up with you
+          are six data fragments.<br><br>
+          Some are useful. Some are misleading. Some actively want to trick you.<br><br>
+          To leave the beach, your team must choose <strong>one</strong> metric worth
+          carrying forward as your anchor insight. Everything else gets thrown back
+          into the ocean.
+        </p>
+      </div>
+
+      <div class="section-title">Data fragments on the beach</div>
+      <div class="metrics-grid" id="metricsGrid"></div>
+
+      <div class="task-box">
+        <div class="task-title">Your task</div>
+        <div class="task-text">
+          <strong>Step 1:</strong> Select the <em>one</em> metric your team will carry
+          forward as your anchor insight.<br>
+          <strong>Step 2:</strong> Justify your choice in 2–4 sentences. Explain:
+          <ul style="margin:6px 0 0 18px; padding-left:0; font-size:12px;">
+            <li>Why this metric is <strong>signal</strong>, not noise</li>
+            <li>What story it hints at</li>
+            <li>Why other metrics are less important</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ch1Justification">Why did you choose this as your anchor metric?</label>
+        <textarea id="ch1Justification"
+          placeholder="Write your team's justification here..."></textarea>
+        <div class="helper-text">
+          Imagine you’re explaining this to the Dean in one slide. Why should they care
+          about this metric above all others?
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="ch1Submit">✅ Submit Chapter 1</button>
+        <button class="btn-ghost" id="ch1Reset">Reset selection</button>
+      </div>
+      <div class="status" id="ch1Status"></div>
+
+      <div class="summary-box" id="ch1Summary" style="display:none;">
+        <div class="summary-title">Chapter 1 – Your anchor metric</div>
+        <div class="summary-line" id="ch1MetricSummary"></div>
+        <div class="summary-line">
+          <strong>Justification:</strong>
+        </div>
+        <div id="ch1JustSummary"></div>
+
+        <div class="chapter-nav">
+          <p>Keep this anchor. It will shape your story in Chapter 2.</p>
+          <button class="btn-next" id="toCh2">
+            Go to Chapter 2 – Stakeholder Council ⏭️
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 2 -->
+    <section id="chapter-2" class="chapter-screen">
+      <div class="intro-card">
+        <div class="intro-title">Chapter 2 · The Council of Conflicting Stakeholders 🏛️</div>
+        <p>
+          You leave the beach and climb to a small hill where three figures are
+          arguing about what “really” caused the engagement drop.<br><br>
+          Each has a different explanation. Each has a different agenda. And each is
+          only partly right.<br><br>
+          Your job is to decide whose perspective is most analytically useful—and then
+          turn your anchor metric into a story using a simple narrative arc.
+        </p>
+      </div>
+
+      <div class="section-title">Stakeholders on the hill</div>
+      <div class="character-grid">
+        <div class="character-card">
+          <div class="character-role">Dean of Panic</div>
+          <div class="character-name">“We are losing reputation.”</div>
+          <div class="character-quote">
+            “Engagement is down? This is catastrophic. Fix it immediately. I don’t want
+            excuses; I want a strong, simple answer.”
+          </div>
+          <div class="helper-text">
+            Cares about: optics, simple answers, short-term risk.
+          </div>
+        </div>
+        <div class="character-card">
+          <div class="character-role">Marketing Pirate</div>
+          <div class="character-name">“The numbers look fine.”</div>
+          <div class="character-quote">
+            “Reach is up, followers are up, everything looks great. Students are just
+            busy with exams. We don’t need to change anything.”
+          </div>
+          <div class="helper-text">
+            Cares about: protecting their work, vanity metrics, spin.
+          </div>
+        </div>
+        <div class="character-card">
+          <div class="character-role">Student Ghost</div>
+          <div class="character-name">“It’s not for us.”</div>
+          <div class="character-quote">
+            “I see your posts but I don’t really care about them. They feel long,
+            generic, and not really about student life.”
+          </div>
+          <div class="helper-text">
+            Cares about: relevance, tone, authenticity.
+          </div>
+        </div>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 1 – Classify the voices</div>
+        <div class="task-text">
+          Use the dropdowns to classify each role:
+          <ul style="margin:6px 0 0 18px; padding-left:0; font-size:12px;">
+            <li>Who gives the most <strong>analytically useful</strong> information?</li>
+            <li>Who is the most <strong>emotion-driven</strong>?</li>
+            <li>Who is the most <strong>misleading</strong>?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Most analytically useful perspective</label>
+        <select id="ch2Useful">
+          <option value="">Select one…</option>
+          <option value="dean">Dean of Panic</option>
+          <option value="marketing">Marketing Pirate</option>
+          <option value="student">Student Ghost</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Most emotion-driven perspective</label>
+        <select id="ch2Emotional">
+          <option value="">Select one…</option>
+          <option value="dean">Dean of Panic</option>
+          <option value="marketing">Marketing Pirate</option>
+          <option value="student">Student Ghost</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Most misleading perspective</label>
+        <select id="ch2Misleading">
+          <option value="">Select one…</option>
+          <option value="dean">Dean of Panic</option>
+          <option value="marketing">Marketing Pirate</option>
+          <option value="student">Student Ghost</option>
+        </select>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 2 – Build your Sparkline</div>
+        <div class="task-text">
+          Turn your Chapter 1 anchor metric into a story using a simple Duarte-style arc:
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>“What is” – current state</label>
+        <textarea id="ch2WhatIs"
+          placeholder="Describe the current reality as your data suggests it."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Conflict / tension</label>
+        <textarea id="ch2Conflict"
+          placeholder="What is the main problem, mismatch, or tension?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Insight – turning point</label>
+        <textarea id="ch2Insight"
+          placeholder="What is the key insight that changes how we see the situation?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>“What could be” – improved future</label>
+        <textarea id="ch2CouldBe"
+          placeholder="What future state becomes possible if we act on this insight?"></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="ch2Submit">✅ Submit Chapter 2</button>
+      </div>
+      <div class="status" id="ch2Status"></div>
+
+      <div class="summary-box" id="ch2Summary" style="display:none;">
+        <div class="summary-title">Chapter 2 – Your stakeholder + story choices</div>
+        <div class="summary-line" id="ch2StakeSummary"></div>
+        <div class="summary-line"><strong>Your story arc is saved for later.</strong></div>
+
+        <div class="chapter-nav">
+          <p>Next you’ll sanity-check broken charts in the Temple of Missing Context.</p>
+          <button class="btn-next" id="toCh3">
+            Go to Chapter 3 – Temple of Missing Context ⏭️
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 3 -->
+    <section id="chapter-3" class="chapter-screen">
+      <div class="intro-card">
+        <div class="intro-title">Chapter 3 · The Temple of Missing Context 🗿</div>
+        <p>
+          As you move inland, you discover an old analytics “temple” full of charts.
+          They look impressive. They are also broken.<br><br>
+          Axes are missing. Timeframes are unclear. Categories don’t add up.<br><br>
+          Your job is not to fix every detail—but to identify what context is missing
+          and rewrite one piece of data into a more honest interpretation.
+        </p>
+      </div>
+
+      <div class="section-title">Ancient charts on the wall</div>
+      <div class="chart-list">
+        <div class="chart-item">
+          <span class="chart-label">Chart A:</span> Bar chart titled
+          <em>“Engagement by Month”</em>, but neither the Y-axis nor the timeframe
+          labels are visible.
+        </div>
+        <div class="chart-item">
+          <span class="chart-label">Chart B:</span> Line chart titled
+          <em>“Posts per Week vs Applications”</em>. The lines move in the same
+          direction, but there is no indication of causality.
+        </div>
+        <div class="chart-item">
+          <span class="chart-label">Chart C:</span> Pie chart titled
+          <em>“Content Types”</em> with slices that sum to 132%.
+        </div>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Your task</div>
+        <div class="task-text">
+          <strong>Step 1:</strong> Choose <em>one</em> chart that you think is most dangerous or misleading.<br>
+          <strong>Step 2:</strong> Describe what context is missing.<br>
+          <strong>Step 3:</strong> Rewrite what that chart should more honestly say.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Which chart did you pick?</label>
+        <select id="ch3ChartChoice">
+          <option value="">Select one…</option>
+          <option value="A">Chart A – Engagement by Month</option>
+          <option value="B">Chart B – Posts vs Applications</option>
+          <option value="C">Chart C – Content Types</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>What context is missing or unclear?</label>
+        <textarea id="ch3Missing"
+          placeholder="Explain what is missing: labels, timeframe, causality, definitions, etc."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Rewrite: what should this chart honestly communicate?</label>
+        <textarea id="ch3Rewrite"
+          placeholder="Write a more honest interpretation, as if you were annotating the chart for a stakeholder."></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="ch3Submit">✅ Submit Chapter 3</button>
+      </div>
+      <div class="status" id="ch3Status"></div>
+
+      <div class="summary-box" id="ch3Summary" style="display:none;">
+        <div class="summary-title">Chapter 3 – Your context correction</div>
+        <div class="summary-line" id="ch3ChoiceSummary"></div>
+        <div class="summary-line">
+          <strong>Your rewritten interpretation is saved. You’ll use this mindset when designing your final action.</strong>
+        </div>
+
+        <div class="chapter-nav">
+          <p>Last step: turn your story into a concrete behavior using the Fogg model.</p>
+          <button class="btn-next" id="toCh4">
+            Go to Chapter 4 – The Final Gate (Action) ⏭️
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTER 4 -->
+    <section id="chapter-4" class="chapter-screen">
+      <div class="intro-card">
+        <div class="intro-title">Chapter 4 · The Final Gate – Action Engine 🔮</div>
+        <p>
+          You reach the final gate. A guardian asks a simple question:<br><br>
+          “So what do you want people to <strong>do</strong> now?”<br><br>
+          Data is not enough. Story is not enough. The gate opens only for a clear,
+          realistic behavior that someone at MUIC could actually take tomorrow.
+        </p>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Your anchor & story (for reference)</div>
+        <div class="task-text" id="ch4AnchorPreview">
+          <!-- Filled by JS -->
+        </div>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Design your action with Fogg B=MAP</div>
+        <div class="task-text">
+          Behavior happens when <strong>Motivation</strong>, <strong>Ability</strong>
+          and a <strong>Prompt</strong> intersect.<br>
+          Use your anchor metric and story to design one clear action.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Motivation – why would the stakeholder want to do this?</label>
+        <textarea id="ch4Motivation"
+          placeholder="What pain are you reducing, or what positive outcome are you creating?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Ability – how do you make the action easy?</label>
+        <textarea id="ch4Ability"
+          placeholder="Reduce friction: time, complexity, approvals, budget, steps."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Prompt – what triggers the action at the right moment?</label>
+        <textarea id="ch4Prompt"
+          placeholder="A meeting? A weekly report? A notification? A deadline?"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Final action statement</label>
+        <textarea id="ch4Action"
+          placeholder="Combine motivation, ability and prompt into one realistic, concrete action."></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" id="ch4Submit">✅ Finish Adventure & Generate Summary</button>
+      </div>
+      <div class="status" id="ch4Status"></div>
+
+      <div class="summary-box" id="ch4Summary" style="display:none;">
+        <div class="summary-title">Final Output – Copy This Into Your Slide / Teams</div>
+        <textarea class="final-output" id="finalOutput" readonly></textarea>
+        <div class="chapter-nav">
+          <p>This is your one-slide narrative in text form: Insight → Story → Action.</p>
+          <button class="btn-next" id="copyOutput">
+            Copy to clipboard 📋
+          </button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Global state
+    let currentChapter = 1;
+    const totalChapters = 4;
+
+    const state = {
+      anchorMetricId: null,
+      anchorMetricText: "",
+      anchorJustification: "",
+      ch2Useful: "",
+      ch2Emotional: "",
+      ch2Misleading: "",
+      storyWhatIs: "",
+      storyConflict: "",
+      storyInsight: "",
+      storyCouldBe: "",
+      ch3ChartChoice: "",
+      ch3Missing: "",
+      ch3Rewrite: "",
+      actionMotivation: "",
+      actionAbility: "",
+      actionPrompt: "",
+      actionStatement: "",
+    };
+
+    const chapterTag = document.getElementById("chapterTag");
+    const progressFill = document.getElementById("progressFill");
+
+    function updateChapterUI() {
+      document.querySelectorAll(".chapter-screen").forEach((ch) => {
+        ch.classList.remove("active");
+      });
+      const active = document.getElementById(`chapter-${currentChapter}`);
+      if (active) active.classList.add("active");
+
+      chapterTag.textContent = `Chapter ${currentChapter} of ${totalChapters}`;
+      const pct = (currentChapter - 1) / (totalChapters - 1 || 1) * 100;
+      progressFill.style.width = `${pct}%`;
+    }
+
+    function goToChapter(n) {
+      currentChapter = n;
+      updateChapterUI();
+    }
+
+    // CHAPTER 1 – metrics setup
+    const metrics = [
+      {
+        id: "Fragment A",
+        label: "Vanity metric / noise",
+        text: "“Total Reach: Up +51% last month.”",
+        hint: "No context. Paid? Organic? Which platform? High potential for misdirection.",
+      },
+      {
+        id: "Fragment B",
+        label: "Potential anchor signal",
+        text: "“Engagement Rate (organic posts only): Down from 4.3% → 2.8%.”",
+        hint: "Clear quality/interaction trend. Strong candidate for an anchor metric.",
+      },
+      {
+        id: "Fragment C",
+        label: "Misleading visual / noise",
+        text: "Line chart with dramatic spikes, but Y-axis runs from 98% to 100%.",
+        hint: "Visual drama without real change. Classic System 1 trap.",
+      },
+      {
+        id: "Fragment D",
+        label: "Contextual signal",
+        text: "“Comment sentiment: Neutral → Slightly Negative over 6 weeks.”",
+        hint: "May matter depending on your story, but needs careful interpretation.",
+      },
+      {
+        id: "Fragment E",
+        label: "Pure noise",
+        text: "Randomly highlighted KPI: “Profile Visits: +6000%”.",
+        hint: "Likely a one-off spike or glitch. Impressive, but not necessarily meaningful.",
+      },
+      {
+        id: "Fragment F",
+        label: "Secondary signal",
+        text: "“Average watch time on video content: Down 18%.”",
+        hint: "Important for video content, but not the whole picture alone.",
+      },
+    ];
+
+    const metricsGrid = document.getElementById("metricsGrid");
+    const ch1Justification = document.getElementById("ch1Justification");
+    const ch1Submit = document.getElementById("ch1Submit");
+    const ch1Reset = document.getElementById("ch1Reset");
+    const ch1Status = document.getElementById("ch1Status");
+    const ch1Summary = document.getElementById("ch1Summary");
+    const ch1MetricSummary = document.getElementById("ch1MetricSummary");
+    const ch1JustSummary = document.getElementById("ch1JustSummary");
+    const toCh2Btn = document.getElementById("toCh2");
+    let selectedMetricId = null;
+
+    function renderMetrics() {
+      metricsGrid.innerHTML = "";
+      metrics.forEach((metric) => {
+        const card = document.createElement("div");
+        card.className = "metric-card";
+        card.dataset.id = metric.id;
+        card.innerHTML = `
+          <div class="metric-label">${metric.label}</div>
+          <div class="metric-id">${metric.id}</div>
+          <div class="metric-text">${metric.text}</div>
+          <div class="metric-hint">${metric.hint}</div>
+          <div class="metric-radio"><div class="metric-radio-dot"></div></div>
+        `;
+        card.addEventListener("click", () => selectMetric(metric.id));
+        metricsGrid.appendChild(card);
+      });
+    }
+
+    function selectMetric(id) {
+      selectedMetricId = id;
+      document.querySelectorAll(".metric-card").forEach((card) => {
+        card.classList.toggle("selected", card.dataset.id === id);
+      });
+      ch1Status.textContent = "";
+      ch1Status.className = "status";
+    }
+
+    function resetCh1() {
+      selectedMetricId = null;
+      ch1Justification.value = "";
+      document.querySelectorAll(".metric-card").forEach((card) =>
+        card.classList.remove("selected")
+      );
+      ch1Status.textContent = "";
+      ch1Status.className = "status";
+      ch1Summary.style.display = "none";
+    }
+
+    function submitCh1() {
+      const just = ch1Justification.value.trim();
+      if (!selectedMetricId && just.length === 0) {
+        ch1Status.textContent =
+          "Select one metric and write a justification before submitting.";
+        ch1Status.className = "status error";
+        return;
+      }
+      if (!selectedMetricId) {
+        ch1Status.textContent = "Select one metric before submitting.";
+        ch1Status.className = "status error";
+        return;
+      }
+      if (just.length < 25) {
+        ch1Status.textContent =
+          "Write a bit more. Aim for at least 2–3 sentences.";
+        ch1Status.className = "status error";
+        return;
+      }
+      const metric = metrics.find((m) => m.id === selectedMetricId);
+      state.anchorMetricId = metric.id;
+      state.anchorMetricText = metric.text;
+      state.anchorJustification = just;
+
+      ch1MetricSummary.textContent = `${metric.id}: ${metric.text}`;
+      ch1JustSummary.textContent = just;
+      ch1Summary.style.display = "block";
+
+      ch1Status.textContent =
+        "Chapter 1 submitted. When instructed, move to Chapter 2.";
+      ch1Status.className = "status success";
+    }
+
+    ch1Submit.addEventListener("click", submitCh1);
+    ch1Reset.addEventListener("click", resetCh1);
+    toCh2Btn.addEventListener("click", () => {
+      if (!state.anchorMetricId) {
+        ch1Status.textContent =
+          "Submit Chapter 1 first before moving on.";
+        ch1Status.className = "status error";
+        return;
+      }
+      goToChapter(2);
+    });
+
+    renderMetrics();
+
+    // CHAPTER 2 logic
+    const ch2Useful = document.getElementById("ch2Useful");
+    const ch2Emotional = document.getElementById("ch2Emotional");
+    const ch2Misleading = document.getElementById("ch2Misleading");
+    const ch2WhatIs = document.getElementById("ch2WhatIs");
+    const ch2Conflict = document.getElementById("ch2Conflict");
+    const ch2Insight = document.getElementById("ch2Insight");
+    const ch2CouldBe = document.getElementById("ch2CouldBe");
+    const ch2Submit = document.getElementById("ch2Submit");
+    const ch2Status = document.getElementById("ch2Status");
+    const ch2Summary = document.getElementById("ch2Summary");
+    const ch2StakeSummary = document.getElementById("ch2StakeSummary");
+    const toCh3Btn = document.getElementById("toCh3");
+
+    function submitCh2() {
+      const useful = ch2Useful.value;
+      const emotional = ch2Emotional.value;
+      const misleading = ch2Misleading.value;
+      const whatIs = ch2WhatIs.value.trim();
+      const conflict = ch2Conflict.value.trim();
+      const insight = ch2Insight.value.trim();
+      const couldBe = ch2CouldBe.value.trim();
+
+      if (!useful || !emotional || !misleading) {
+        ch2Status.textContent =
+          "Classify all three perspectives (useful, emotion-driven, misleading).";
+        ch2Status.className = "status error";
+        return;
+      }
+
+      if (
+        whatIs.length < 20 ||
+        conflict.length < 20 ||
+        insight.length < 20 ||
+        couldBe.length < 20
+      ) {
+        ch2Status.textContent =
+          "Write at least 2–3 sentences for each part of the story.";
+        ch2Status.className = "status error";
+        return;
+      }
+
+      state.ch2Useful = useful;
+      state.ch2Emotional = emotional;
+      state.ch2Misleading = misleading;
+      state.storyWhatIs = whatIs;
+      state.storyConflict = conflict;
+      state.storyInsight = insight;
+      state.storyCouldBe = couldBe;
+
+      const mapLabel = (v) =>
+        v === "dean"
+          ? "Dean of Panic"
+          : v === "marketing"
+          ? "Marketing Pirate"
+          : "Student Ghost";
+
+      ch2StakeSummary.textContent =
+        `Most useful: ${mapLabel(useful)} · Most emotion-driven: ${mapLabel(
+          emotional
+        )} · Most misleading: ${mapLabel(misleading)}`;
+
+      ch2Summary.style.display = "block";
+      ch2Status.textContent =
+        "Chapter 2 submitted. When ready, move on to Chapter 3.";
+      ch2Status.className = "status success";
+    }
+
+    ch2Submit.addEventListener("click", submitCh2);
+    toCh3Btn.addEventListener("click", () => {
+      if (!state.storyWhatIs) {
+        ch2Status.textContent =
+          "Submit Chapter 2 first before moving on.";
+        ch2Status.className = "status error";
+        return;
+      }
+      goToChapter(3);
+    });
+
+    // CHAPTER 3 logic
+    const ch3ChartChoice = document.getElementById("ch3ChartChoice");
+    const ch3Missing = document.getElementById("ch3Missing");
+    const ch3Rewrite = document.getElementById("ch3Rewrite");
+    const ch3Submit = document.getElementById("ch3Submit");
+    const ch3Status = document.getElementById("ch3Status");
+    const ch3Summary = document.getElementById("ch3Summary");
+    const ch3ChoiceSummary = document.getElementById("ch3ChoiceSummary");
+    const toCh4Btn = document.getElementById("toCh4");
+
+    function submitCh3() {
+      const choice = ch3ChartChoice.value;
+      const missing = ch3Missing.value.trim();
+      const rewrite = ch3Rewrite.value.trim();
+
+      if (!choice) {
+        ch3Status.textContent =
+          "Select which chart you’re correcting.";
+        ch3Status.className = "status error";
+        return;
+      }
+      if (missing.length < 20 || rewrite.length < 20) {
+        ch3Status.textContent =
+          "Write at least 2–3 sentences for the missing context and the rewritten interpretation.";
+        ch3Status.className = "status error";
+        return;
+      }
+
+      state.ch3ChartChoice = choice;
+      state.ch3Missing = missing;
+      state.ch3Rewrite = rewrite;
+
+      ch3ChoiceSummary.textContent =
+        `You focused on Chart ${choice} and rewrote its meaning with clearer context.`;
+      ch3Summary.style.display = "block";
+      ch3Status.textContent =
+        "Chapter 3 submitted. Move to Chapter 4 when you’re ready.";
+      ch3Status.className = "status success";
+    }
+
+    ch3Submit.addEventListener("click", submitCh3);
+    toCh4Btn.addEventListener("click", () => {
+      if (!state.ch3ChartChoice) {
+        ch3Status.textContent =
+          "Submit Chapter 3 first before moving on.";
+        ch3Status.className = "status error";
+        return;
+      }
+      // Fill Chapter 4 anchor preview
+      const anchorText =
+        state.anchorMetricId && state.anchorMetricText
+          ? `${state.anchorMetricId}: ${state.anchorMetricText}`
+          : "(No anchor metric saved – something went wrong.)";
+      const ch4AnchorPreview = document.getElementById("ch4AnchorPreview");
+      ch4AnchorPreview.innerHTML = `
+        <strong>Anchor metric:</strong> ${anchorText}<br>
+        <strong>Story (short):</strong> ${state.storyInsight || "(Your insight from Chapter 2 will go here.)"}
+      `;
+      goToChapter(4);
+    });
+
+    // CHAPTER 4 logic
+    const ch4Motivation = document.getElementById("ch4Motivation");
+    const ch4Ability = document.getElementById("ch4Ability");
+    const ch4Prompt = document.getElementById("ch4Prompt");
+    const ch4Action = document.getElementById("ch4Action");
+    const ch4Submit = document.getElementById("ch4Submit");
+    const ch4Status = document.getElementById("ch4Status");
+    const ch4Summary = document.getElementById("ch4Summary");
+    const finalOutput = document.getElementById("finalOutput");
+    const copyOutputBtn = document.getElementById("copyOutput");
+
+    function submitCh4() {
+      const mot = ch4Motivation.value.trim();
+      const abil = ch4Ability.value.trim();
+      const pr = ch4Prompt.value.trim();
+      const act = ch4Action.value.trim();
+
+      if (
+        mot.length < 20 ||
+        abil.length < 20 ||
+        pr.length < 20 ||
+        act.length < 20
+      ) {
+        ch4Status.textContent =
+          "Write at least 2–3 sentences for each part. This is your final action design.";
+        ch4Status.className = "status error";
+        return;
+      }
+
+      state.actionMotivation = mot;
+      state.actionAbility = abil;
+      state.actionPrompt = pr;
+      state.actionStatement = act;
+
+      // Build final output text
+      const lines = [];
+
+      lines.push("=== INSIGHT – ANCHOR METRIC ===");
+      lines.push(
+        state.anchorMetricId
+          ? `${state.anchorMetricId}: ${state.anchorMetricText}`
+          : "(No anchor metric captured.)"
+      );
+      lines.push("");
+      lines.push("Justification:");
+      lines.push(state.anchorJustification || "(none)");
+      lines.push("");
+      lines.push("=== STORY – SPARKLINE (DUARTE) ===");
+      lines.push(`What is: ${state.storyWhatIs || "(none)"}`);
+      lines.push(`Conflict: ${state.storyConflict || "(none)"}`);
+      lines.push(`Insight: ${state.storyInsight || "(none)"}`);
+      lines.push(`What could be: ${state.storyCouldBe || "(none)"}`);
+      lines.push("");
+      lines.push("=== CONTEXT CORRECTION (CHART) ===");
+      lines.push(
+        state.ch3ChartChoice
+          ? `Focused chart: ${state.ch3ChartChoice}`
+          : "Focused chart: (none)"
+      );
+      lines.push(`Missing context: ${state.ch3Missing || "(none)"}`);
+      lines.push(
+        `Rewritten interpretation: ${state.ch3Rewrite || "(none)"}`
+      );
+      lines.push("");
+      lines.push("=== ACTION – FOGG B=MAP ===");
+      lines.push(`Motivation: ${state.actionMotivation}`);
+      lines.push(`Ability: ${state.actionAbility}`);
+      lines.push(`Prompt: ${state.actionPrompt}`);
+      lines.push("");
+      lines.push("Final action statement:");
+      lines.push(state.actionStatement);
+
+      finalOutput.value = lines.join("\n");
+      ch4Summary.style.display = "block";
+      ch4Status.textContent =
+        "Adventure complete. Copy this text into your slide or Teams submission.";
+      ch4Status.className = "status success";
+    }
+
+    ch4Submit.addEventListener("click", submitCh4);
+
+    copyOutputBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(finalOutput.value);
+        ch4Status.textContent = "Copied to clipboard.";
+        ch4Status.className = "status success";
+      } catch (e) {
+        ch4Status.textContent =
+          "Could not copy automatically. Please select and copy manually.";
+        ch4Status.className = "status error";
+      }
+    });
+
+    // Init
+    updateChapterUI();
+  </script>
+</body>
+</html>
