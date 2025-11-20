@@ -77,13 +77,6 @@
       color: var(--text-muted);
     }
 
-    .top-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-    }
-
     .progress-bar {
       margin-top: 8px;
       height: 4px;
@@ -150,13 +143,16 @@
     .metric-card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 10px 11px 12px;
+      padding: 14px 14px 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       cursor: pointer;
       position: relative;
       transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
         border-color 0.12s ease-out, background 0.12s ease-out;
       font-size: 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .metric-card:hover {
@@ -176,37 +172,24 @@
       );
     }
 
-    .metric-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      margin-bottom: 4px;
-    }
-
     .metric-id {
       font-weight: 600;
-      font-size: 12px;
-      margin-bottom: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--accent);
     }
 
     .metric-text {
-      font-size: 13px;
-      line-height: 1.35;
+      font-size: 14px;
+      line-height: 1.4;
       color: var(--text-main);
-      margin-bottom: 6px;
-    }
-
-    .metric-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-style: italic;
     }
 
     .metric-radio {
       position: absolute;
-      top: 8px;
-      right: 8px;
+      top: 12px;
+      right: 12px;
       width: 16px;
       height: 16px;
       border-radius: 50%;
@@ -251,6 +234,13 @@
       color: var(--text-muted);
       line-height: 1.5;
       font-size: 13px;
+    }
+    
+    .task-box ul {
+        margin: 6px 0 0 18px;
+        padding-left: 0;
+        font-size: 12px;
+        color: var(--text-muted);
     }
 
     .form-group {
@@ -350,7 +340,7 @@
 
     .summary-box {
       margin-top: 16px;
-      padding: 12px 14px;
+      padding: 24px;
       border-radius: 10px;
       background: rgba(9, 32, 20, 0.95);
       border: 1px solid rgba(101, 214, 145, 0.5);
@@ -359,10 +349,6 @@
 
     .summary-title {
       font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .summary-line {
       margin-bottom: 4px;
     }
 
@@ -396,8 +382,32 @@
       gap: 6px;
     }
 
-    .btn-next span {
-      font-size: 14px;
+    .tada-container {
+        text-align: center;
+        margin-bottom: 16px;
+    }
+    .tada-icon {
+        font-size: 48px;
+        margin-bottom: 8px;
+        display: inline-block;
+        animation: pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes pop {
+        0% { transform: scale(0); opacity: 0; }
+        70% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+    .final-instruction {
+        text-align: center;
+        color: #a8e6cf;
+        font-size: 14px;
+        margin-bottom: 16px;
+        line-height: 1.5;
+    }
+    .final-instruction strong {
+        color: white;
+        font-weight: 700;
+        border-bottom: 1px solid white;
     }
 
     .character-grid {
@@ -432,6 +442,11 @@
       font-style: italic;
       color: var(--text-main);
       margin-bottom: 4px;
+    }
+    
+    .character-card .helper-text {
+        margin-top: 8px;
+        opacity: 0.7;
     }
 
     .chart-list {
@@ -495,11 +510,12 @@
         <p>
           Your analytics ship crashes on the shores of Analytics Island. The sand is
           warm, the Wi-Fi is questionable, and the only things that washed up with you
-          are six data fragments.<br><br>
-          Some are useful. Some are misleading. Some actively want to trick you.<br><br>
-          To leave the beach, your team must choose <strong>one</strong> metric worth
-          carrying forward as your anchor insight. Everything else gets thrown back
-          into the ocean.
+          are six data fragments.
+        </p>
+        <p style="margin-top:6px;">
+           Some are useful. Some are misleading. Some actively want to trick you.
+           To leave the beach, your team must choose <strong>one</strong> metric worth
+           carrying forward as your anchor insight.
         </p>
       </div>
 
@@ -507,50 +523,53 @@
       <div class="metrics-grid" id="metricsGrid"></div>
 
       <div class="task-box">
-        <div class="task-title">Your task</div>
+        <div class="task-title">Step 1 – Team choice (Anchor Metric)</div>
         <div class="task-text">
-          <strong>Step 1:</strong> Select the <em>one</em> metric your team will carry
-          forward as your anchor insight.<br>
-          <strong>Step 2:</strong> Justify your choice in 2–4 sentences. Explain:
-          <ul style="margin:6px 0 0 18px; padding-left:0; font-size:12px;">
-            <li>Why this metric is <strong>signal</strong>, not noise</li>
-            <li>What story it hints at</li>
-            <li>Why other metrics are less important</li>
-          </ul>
+           As a team, discuss all six fragments and choose <strong>ONE</strong> anchor metric.
         </div>
+        <ul>
+           <li>Which fragment tells you something meaningful about <strong>quality</strong> or <strong>behavior</strong>?</li>
+           <li>Which one is more than just a “numbers look big” moment?</li>
+           <li>Which one would you actually show in a serious MUIC meeting?</li>
+        </ul>
       </div>
 
       <div class="form-group">
         <label for="ch1Justification">Why did you choose this as your anchor metric?</label>
         <textarea id="ch1Justification"
-          placeholder="Write your team's justification here..."></textarea>
-        <div class="helper-text">
-          Imagine you’re explaining this to the Dean in one slide. Why should they care
-          about this metric above all others?
+          placeholder="Explain in 3–5 sentences why this is your main metric and what story it suggests..."></textarea>
+      </div>
+
+      <div class="task-box">
+         <div class="task-title">Step 2 – Team challenge: Anchor Metric Battle</div>
+         <div class="task-text">Prepare for a short “Anchor Battle” later:</div>
+         <ul>
+            <li>Write a 1–2 sentence <strong>defense</strong> of your anchor metric.</li>
+            <li>Predict which metric another team might choose and write a 1–2 sentence <strong>rebuttal</strong>.</li>
+         </ul>
+      </div>
+
+      <div class="form-group">
+        <label>Defense – why your anchor wins</label>
+        <textarea id="ch1Defense" placeholder="Defend your anchor metric as the best lens..."></textarea>
+      </div>
+      
+      <div class="form-group">
+        <label>Rebuttal – why another metric is weaker</label>
+        <textarea id="ch1Rebuttal" placeholder="Explain why a likely alternative anchor metric would be less useful..."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Instructor Checkpoint</div>
+        <div class="task-text">
+           Before moving to Chapter 2, call your instructor to verify your choice.
         </div>
       </div>
 
       <div class="btn-row">
         <button class="btn-primary" id="ch1Submit">✅ Submit Chapter 1</button>
-        <button class="btn-ghost" id="ch1Reset">Reset selection</button>
       </div>
       <div class="status" id="ch1Status"></div>
-
-      <div class="summary-box" id="ch1Summary" style="display:none;">
-        <div class="summary-title">Chapter 1 – Your anchor metric</div>
-        <div class="summary-line" id="ch1MetricSummary"></div>
-        <div class="summary-line">
-          <strong>Justification:</strong>
-        </div>
-        <div id="ch1JustSummary"></div>
-
-        <div class="chapter-nav">
-          <p>Keep this anchor. It will shape your story in Chapter 2.</p>
-          <button class="btn-next" id="toCh2">
-            Go to Chapter 2 – Stakeholder Council ⏭️
-          </button>
-        </div>
-      </div>
     </section>
 
     <!-- CHAPTER 2 -->
@@ -558,12 +577,8 @@
       <div class="intro-card">
         <div class="intro-title">Chapter 2 · The Council of Conflicting Stakeholders 🏛️</div>
         <p>
-          You leave the beach and climb to a small hill where three figures are
-          arguing about what “really” caused the engagement drop.<br><br>
-          Each has a different explanation. Each has a different agenda. And each is
-          only partly right.<br><br>
-          Your job is to decide whose perspective is most analytically useful—and then
-          turn your anchor metric into a story using a simple narrative arc.
+          You climb the hill and meet three powerful voices arguing about what your anchor metric “really” means.
+          Your job is to decide who helps you tell a useful story, not just who is the loudest.
         </p>
       </div>
 
@@ -588,15 +603,15 @@
             busy with exams. We don’t need to change anything.”
           </div>
           <div class="helper-text">
-            Cares about: protecting their work, vanity metrics, spin.
+            Cares about: defending current work, vanity metrics.
           </div>
         </div>
         <div class="character-card">
           <div class="character-role">Student Ghost</div>
           <div class="character-name">“It’s not for us.”</div>
           <div class="character-quote">
-            “I see your posts but I don’t really care about them. They feel long,
-            generic, and not really about student life.”
+            “I see your posts but I don’t really care. They feel generic and not really
+            about student life.”
           </div>
           <div class="helper-text">
             Cares about: relevance, tone, authenticity.
@@ -608,11 +623,6 @@
         <div class="task-title">Step 1 – Classify the voices</div>
         <div class="task-text">
           Use the dropdowns to classify each role:
-          <ul style="margin:6px 0 0 18px; padding-left:0; font-size:12px;">
-            <li>Who gives the most <strong>analytically useful</strong> information?</li>
-            <li>Who is the most <strong>emotion-driven</strong>?</li>
-            <li>Who is the most <strong>misleading</strong>?</li>
-          </ul>
         </div>
       </div>
 
@@ -662,38 +672,50 @@
       <div class="form-group">
         <label>Conflict / tension</label>
         <textarea id="ch2Conflict"
-          placeholder="What is the main problem, mismatch, or tension?"></textarea>
+          placeholder="What’s the main problem, mismatch, or risk?"></textarea>
       </div>
 
       <div class="form-group">
         <label>Insight – turning point</label>
         <textarea id="ch2Insight"
-          placeholder="What is the key insight that changes how we see the situation?"></textarea>
+          placeholder="What key insight changes how we understand the situation?"></textarea>
       </div>
 
       <div class="form-group">
         <label>“What could be” – improved future</label>
         <textarea id="ch2CouldBe"
-          placeholder="What future state becomes possible if we act on this insight?"></textarea>
+          placeholder="What realistic, improved future becomes possible?"></textarea>
+      </div>
+      
+      <div class="task-box">
+          <div class="task-title">Step 3 – Perspective rewrites</div>
+          <div class="task-text">Rewrite your <strong>insight</strong> from three different perspectives:</div>
+      </div>
+      
+      <div class="form-group">
+          <label>Insight from the Dean’s perspective</label>
+          <textarea id="ch2InsightDean" placeholder="Short, strong, risk-focused."></textarea>
+      </div>
+      <div class="form-group">
+          <label>Insight from the Marketing Pirate’s perspective</label>
+          <textarea id="ch2InsightPirate" placeholder="Defensive spin on the strategy."></textarea>
+      </div>
+      <div class="form-group">
+          <label>Insight from the Student Ghost’s perspective</label>
+          <textarea id="ch2InsightStudent" placeholder="Bored, annoyed, or unimpressed."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Instructor Checkpoint</div>
+        <div class="task-text">
+           Call your instructor: Summarize your story arc and read one of your rewritten perspectives aloud.
+        </div>
       </div>
 
       <div class="btn-row">
         <button class="btn-primary" id="ch2Submit">✅ Submit Chapter 2</button>
       </div>
       <div class="status" id="ch2Status"></div>
-
-      <div class="summary-box" id="ch2Summary" style="display:none;">
-        <div class="summary-title">Chapter 2 – Your stakeholder + story choices</div>
-        <div class="summary-line" id="ch2StakeSummary"></div>
-        <div class="summary-line"><strong>Your story arc is saved for later.</strong></div>
-
-        <div class="chapter-nav">
-          <p>Next you’ll sanity-check broken charts in the Temple of Missing Context.</p>
-          <button class="btn-next" id="toCh3">
-            Go to Chapter 3 – Temple of Missing Context ⏭️
-          </button>
-        </div>
-      </div>
     </section>
 
     <!-- CHAPTER 3 -->
@@ -701,11 +723,11 @@
       <div class="intro-card">
         <div class="intro-title">Chapter 3 · The Temple of Missing Context 🗿</div>
         <p>
-          As you move inland, you discover an old analytics “temple” full of charts.
-          They look impressive. They are also broken.<br><br>
-          Axes are missing. Timeframes are unclear. Categories don’t add up.<br><br>
-          Your job is not to fix every detail—but to identify what context is missing
-          and rewrite one piece of data into a more honest interpretation.
+          Deeper inside the island, you find three impressive-looking charts carved into stone. 
+          They would look great in a slide deck. They are also terrible.
+        </p>
+        <p style="margin-top:6px;">
+          Your job is not to “make them pretty”. Your job is to stop them from lying.
         </p>
       </div>
 
@@ -728,11 +750,9 @@
       </div>
 
       <div class="task-box">
-        <div class="task-title">Your task</div>
+        <div class="task-title">Step 1 – Choose your stone</div>
         <div class="task-text">
-          <strong>Step 1:</strong> Choose <em>one</em> chart that you think is most dangerous or misleading.<br>
-          <strong>Step 2:</strong> Describe what context is missing.<br>
-          <strong>Step 3:</strong> Rewrite what that chart should more honestly say.
+          Choose <strong>one</strong> chart that is most dangerous or misleading.
         </div>
       </div>
 
@@ -747,36 +767,40 @@
       </div>
 
       <div class="form-group">
-        <label>What context is missing or unclear?</label>
+        <label>Step 2 – What context is missing or unclear?</label>
         <textarea id="ch3Missing"
-          placeholder="Explain what is missing: labels, timeframe, causality, definitions, etc."></textarea>
+          placeholder="Describe exactly what information is missing: labels, timeframe, causality, definitions..."></textarea>
       </div>
 
       <div class="form-group">
-        <label>Rewrite: what should this chart honestly communicate?</label>
+        <label>Step 3 – Rewrite: what should this chart honestly say?</label>
         <textarea id="ch3Rewrite"
-          placeholder="Write a more honest interpretation, as if you were annotating the chart for a stakeholder."></textarea>
+          placeholder="Write a more honest interpretation, as if annotating for a stakeholder."></textarea>
+      </div>
+      
+      <div class="task-box">
+        <div class="task-title">Step 4 – Mini-mockup challenge</div>
+        <div class="task-text">
+            Create a very simple corrected version of your chart (on paper/Canva) and describe it below.
+        </div>
+      </div>
+      
+      <div class="form-group">
+          <label>Describe your corrected mockup</label>
+          <textarea id="ch3Mockup" placeholder="Briefly describe what you changed: scale, labels, title, annotations..."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Instructor Checkpoint</div>
+        <div class="task-text">
+           Call your instructor: Show your chart choice and your corrected mockup idea.
+        </div>
       </div>
 
       <div class="btn-row">
         <button class="btn-primary" id="ch3Submit">✅ Submit Chapter 3</button>
       </div>
       <div class="status" id="ch3Status"></div>
-
-      <div class="summary-box" id="ch3Summary" style="display:none;">
-        <div class="summary-title">Chapter 3 – Your context correction</div>
-        <div class="summary-line" id="ch3ChoiceSummary"></div>
-        <div class="summary-line">
-          <strong>Your rewritten interpretation is saved. You’ll use this mindset when designing your final action.</strong>
-        </div>
-
-        <div class="chapter-nav">
-          <p>Last step: turn your story into a concrete behavior using the Fogg model.</p>
-          <button class="btn-next" id="toCh4">
-            Go to Chapter 4 – The Final Gate (Action) ⏭️
-          </button>
-        </div>
-      </div>
     </section>
 
     <!-- CHAPTER 4 -->
@@ -784,26 +808,31 @@
       <div class="intro-card">
         <div class="intro-title">Chapter 4 · The Final Gate – Action Engine 🔮</div>
         <p>
-          You reach the final gate. A guardian asks a simple question:<br><br>
-          “So what do you want people to <strong>do</strong> now?”<br><br>
-          Data is not enough. Story is not enough. The gate opens only for a clear,
-          realistic behavior that someone at MUIC could actually take tomorrow.
+          You reach the final gate. The guardian asks only one question:
+          <br><br>
+          <strong>“So what do you want someone at MUIC to actually do next week?”</strong>
+        </p>
+        <p>
+          Use Fogg’s Behavior Model: <strong>Behavior = Motivation × Ability × Prompt</strong>.
         </p>
       </div>
 
       <div class="task-box">
-        <div class="task-title">Your anchor & story (for reference)</div>
+        <div class="task-title">Step 1 – Quick recap of your story</div>
         <div class="task-text" id="ch4AnchorPreview">
           <!-- Filled by JS -->
         </div>
       </div>
+      
+      <div class="form-group">
+          <label>Story recap (anchor + insight + risk/opportunity)</label>
+          <textarea id="ch4StoryRecap" placeholder="Write 2–3 sentences summarizing your findings so far..."></textarea>
+      </div>
 
       <div class="task-box">
-        <div class="task-title">Design your action with Fogg B=MAP</div>
+        <div class="task-title">Step 2 – Design your behavior (B=MAP)</div>
         <div class="task-text">
-          Behavior happens when <strong>Motivation</strong>, <strong>Ability</strong>
-          and a <strong>Prompt</strong> intersect.<br>
-          Use your anchor metric and story to design one clear action.
+          Choose <strong>one concrete behavior</strong> you want a stakeholder to perform.
         </div>
       </div>
 
@@ -822,13 +851,35 @@
       <div class="form-group">
         <label>Prompt – what triggers the action at the right moment?</label>
         <textarea id="ch4Prompt"
-          placeholder="A meeting? A weekly report? A notification? A deadline?"></textarea>
+          placeholder="Specify a moment + channel (e.g., weekly meeting, email report)."></textarea>
       </div>
 
       <div class="form-group">
-        <label>Final action statement</label>
+        <label>Step 3 – Final action statement</label>
         <textarea id="ch4Action"
-          placeholder="Combine motivation, ability and prompt into one realistic, concrete action."></textarea>
+          placeholder="Combine everything into one clear sentence."></textarea>
+      </div>
+      
+      <div class="task-box">
+          <div class="task-title">Step 4 – Team Swap Test</div>
+          <div class="task-text">Swap with another team. Rate their clarity and offer one critique.</div>
+      </div>
+      
+      <div class="form-group">
+          <label>Feedback you received from another team</label>
+          <textarea id="ch4Feedback" placeholder="Summarize the rating, critique, and suggestion you received."></textarea>
+      </div>
+      
+      <div class="form-group">
+          <label>Step 5 – Revised final action (after feedback)</label>
+          <textarea id="ch4RevisedAction" placeholder="Rewrite your action statement after considering the feedback."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Instructor Checkpoint & Gallery</div>
+        <div class="task-text">
+           Ready to present? Read your revised action statement aloud to the class.
+        </div>
       </div>
 
       <div class="btn-row">
@@ -837,12 +888,18 @@
       <div class="status" id="ch4Status"></div>
 
       <div class="summary-box" id="ch4Summary" style="display:none;">
-        <div class="summary-title">Final Output – Copy This Into Your Slide / Teams</div>
+        <div class="tada-container">
+            <div class="tada-icon">🎉</div>
+            <div class="summary-title" style="font-size: 16px; color: #7ddc8a;">Mission Accomplished!</div>
+        </div>
+        <p class="final-instruction">
+            Great job, Investigator. Your analysis is complete.<br>
+            Please copy the report below and paste it into the <strong>Google Classroom</strong> assignment.
+        </p>
         <textarea class="final-output" id="finalOutput" readonly></textarea>
-        <div class="chapter-nav">
-          <p>This is your one-slide narrative in text form: Insight → Story → Action.</p>
-          <button class="btn-next" id="copyOutput">
-            Copy to clipboard 📋
+        <div class="chapter-nav" style="justify-content: center;">
+          <button class="btn-next" id="copyOutput" style="background: #7ddc8a; color: #092014; border: none; font-weight: 700;">
+            Copy Report to Clipboard 📋
           </button>
         </div>
       </div>
@@ -855,9 +912,13 @@
     const totalChapters = 4;
 
     const state = {
+      // CH1
       anchorMetricId: null,
       anchorMetricText: "",
       anchorJustification: "",
+      anchorDefense: "",
+      anchorRebuttal: "",
+      // CH2
       ch2Useful: "",
       ch2Emotional: "",
       ch2Misleading: "",
@@ -865,13 +926,22 @@
       storyConflict: "",
       storyInsight: "",
       storyCouldBe: "",
+      insightDean: "",
+      insightPirate: "",
+      insightStudent: "",
+      // CH3
       ch3ChartChoice: "",
       ch3Missing: "",
       ch3Rewrite: "",
+      ch3Mockup: "",
+      // CH4
+      storyRecap: "",
       actionMotivation: "",
       actionAbility: "",
       actionPrompt: "",
       actionStatement: "",
+      feedbackReceived: "",
+      revisedAction: ""
     };
 
     const chapterTag = document.getElementById("chapterTag");
@@ -895,54 +965,22 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // CHAPTER 1 – metrics setup
+    // CHAPTER 1 – metrics setup (HARD MODE: NO LABELS/HINTS)
     const metrics = [
-      {
-        id: "Fragment A",
-        label: "Vanity metric / noise",
-        text: "“Total Reach: Up +51% last month.”",
-        hint: "No context. Paid? Organic? Which platform? High potential for misdirection.",
-      },
-      {
-        id: "Fragment B",
-        label: "Potential anchor signal",
-        text: "“Engagement Rate (organic posts only): Down from 4.3% → 2.8%.”",
-        hint: "Clear quality/interaction trend. Strong candidate for an anchor metric.",
-      },
-      {
-        id: "Fragment C",
-        label: "Misleading visual / noise",
-        text: "Line chart with dramatic spikes, but Y-axis runs from 98% to 100%.",
-        hint: "Visual drama without real change. Classic System 1 trap.",
-      },
-      {
-        id: "Fragment D",
-        label: "Contextual signal",
-        text: "“Comment sentiment: Neutral → Slightly Negative over 6 weeks.”",
-        hint: "May matter depending on your story, but needs careful interpretation.",
-      },
-      {
-        id: "Fragment E",
-        label: "Pure noise",
-        text: "Randomly highlighted KPI: “Profile Visits: +6000%”.",
-        hint: "Likely a one-off spike or glitch. Impressive, but not necessarily meaningful.",
-      },
-      {
-        id: "Fragment F",
-        label: "Secondary signal",
-        text: "“Average watch time on video content: Down 18%.”",
-        hint: "Important for video content, but not the whole picture alone.",
-      },
+      { id: "Fragment A", text: "“Total Reach: Up +51% last month.”" },
+      { id: "Fragment B", text: "“Engagement Rate (organic posts only): Down from 4.3% → 2.8%.”" },
+      { id: "Fragment C", text: "Line chart with dramatic spikes, but Y-axis runs from 98% to 100%." },
+      { id: "Fragment D", text: "“Comment sentiment: Neutral → Slightly Negative over 6 weeks.”" },
+      { id: "Fragment E", text: "Randomly highlighted KPI: “Profile Visits: +6000%”." },
+      { id: "Fragment F", text: "“Average watch time on video content: Down 18%.”" },
     ];
 
     const metricsGrid = document.getElementById("metricsGrid");
     const ch1Justification = document.getElementById("ch1Justification");
+    const ch1Defense = document.getElementById("ch1Defense");
+    const ch1Rebuttal = document.getElementById("ch1Rebuttal");
     const ch1Submit = document.getElementById("ch1Submit");
-    const ch1Reset = document.getElementById("ch1Reset");
     const ch1Status = document.getElementById("ch1Status");
-    const ch1Summary = document.getElementById("ch1Summary");
-    const ch1MetricSummary = document.getElementById("ch1MetricSummary");
-    const ch1JustSummary = document.getElementById("ch1JustSummary");
     const toCh2Btn = document.getElementById("toCh2");
     let selectedMetricId = null;
 
@@ -953,10 +991,8 @@
         card.className = "metric-card";
         card.dataset.id = metric.id;
         card.innerHTML = `
-          <div class="metric-label">${metric.label}</div>
           <div class="metric-id">${metric.id}</div>
           <div class="metric-text">${metric.text}</div>
-          <div class="metric-hint">${metric.hint}</div>
           <div class="metric-radio"><div class="metric-radio-dot"></div></div>
         `;
         card.addEventListener("click", () => selectMetric(metric.id));
@@ -973,61 +1009,35 @@
       ch1Status.className = "status";
     }
 
-    function resetCh1() {
-      selectedMetricId = null;
-      ch1Justification.value = "";
-      document.querySelectorAll(".metric-card").forEach((card) =>
-        card.classList.remove("selected")
-      );
-      ch1Status.textContent = "";
-      ch1Status.className = "status";
-      ch1Summary.style.display = "none";
-    }
-
     function submitCh1() {
       const just = ch1Justification.value.trim();
-      if (!selectedMetricId && just.length === 0) {
-        ch1Status.textContent =
-          "Select one metric and write a justification before submitting.";
-        ch1Status.className = "status error";
-        return;
-      }
+      const def = ch1Defense.value.trim();
+      const reb = ch1Rebuttal.value.trim();
+
       if (!selectedMetricId) {
         ch1Status.textContent = "Select one metric before submitting.";
         ch1Status.className = "status error";
         return;
       }
-      if (just.length < 25) {
-        ch1Status.textContent =
-          "Write a bit more. Aim for at least 2–3 sentences.";
+      if (just.length < 10 || def.length < 10 || reb.length < 10) {
+        ch1Status.textContent = "Please complete the Justification, Defense, and Rebuttal fields.";
         ch1Status.className = "status error";
         return;
       }
+      
       const metric = metrics.find((m) => m.id === selectedMetricId);
       state.anchorMetricId = metric.id;
       state.anchorMetricText = metric.text;
       state.anchorJustification = just;
+      state.anchorDefense = def;
+      state.anchorRebuttal = reb;
 
-      ch1MetricSummary.textContent = `${metric.id}: ${metric.text}`;
-      ch1JustSummary.textContent = just;
-      ch1Summary.style.display = "block";
-
-      ch1Status.textContent =
-        "Chapter 1 submitted. When instructed, move to Chapter 2.";
+      ch1Status.textContent = "Chapter 1 submitted. Unlocking Chapter 2...";
       ch1Status.className = "status success";
+      setTimeout(() => goToChapter(2), 1000);
     }
 
     ch1Submit.addEventListener("click", submitCh1);
-    ch1Reset.addEventListener("click", resetCh1);
-    toCh2Btn.addEventListener("click", () => {
-      if (!state.anchorMetricId) {
-        ch1Status.textContent =
-          "Submit Chapter 1 first before moving on.";
-        ch1Status.className = "status error";
-        return;
-      }
-      goToChapter(2);
-    });
 
     // CHAPTER 2 logic
     const ch2Useful = document.getElementById("ch2Useful");
@@ -1037,11 +1047,11 @@
     const ch2Conflict = document.getElementById("ch2Conflict");
     const ch2Insight = document.getElementById("ch2Insight");
     const ch2CouldBe = document.getElementById("ch2CouldBe");
+    const ch2InsightDean = document.getElementById("ch2InsightDean");
+    const ch2InsightPirate = document.getElementById("ch2InsightPirate");
+    const ch2InsightStudent = document.getElementById("ch2InsightStudent");
     const ch2Submit = document.getElementById("ch2Submit");
     const ch2Status = document.getElementById("ch2Status");
-    const ch2Summary = document.getElementById("ch2Summary");
-    const ch2StakeSummary = document.getElementById("ch2StakeSummary");
-    const toCh3Btn = document.getElementById("toCh3");
 
     function submitCh2() {
       const useful = ch2Useful.value;
@@ -1051,24 +1061,26 @@
       const conflict = ch2Conflict.value.trim();
       const insight = ch2Insight.value.trim();
       const couldBe = ch2CouldBe.value.trim();
+      const iDean = ch2InsightDean.value.trim();
+      const iPirate = ch2InsightPirate.value.trim();
+      const iStudent = ch2InsightStudent.value.trim();
 
       if (!useful || !emotional || !misleading) {
-        ch2Status.textContent =
-          "Classify all three perspectives (useful, emotion-driven, misleading).";
+        ch2Status.textContent = "Classify all three perspectives.";
         ch2Status.className = "status error";
         return;
       }
 
-      if (
-        whatIs.length < 20 ||
-        conflict.length < 20 ||
-        insight.length < 20 ||
-        couldBe.length < 20
-      ) {
-        ch2Status.textContent =
-          "Write at least 2–3 sentences for each part of the story.";
+      if (whatIs.length < 10 || conflict.length < 10 || insight.length < 10 || couldBe.length < 10) {
+        ch2Status.textContent = "Please complete the Story Arc sections.";
         ch2Status.className = "status error";
         return;
+      }
+      
+      if (iDean.length < 10 || iPirate.length < 10 || iStudent.length < 10) {
+          ch2Status.textContent = "Please rewrite the insight from all 3 perspectives.";
+          ch2Status.className = "status error";
+          return;
       }
 
       state.ch2Useful = useful;
@@ -1078,60 +1090,38 @@
       state.storyConflict = conflict;
       state.storyInsight = insight;
       state.storyCouldBe = couldBe;
+      state.insightDean = iDean;
+      state.insightPirate = iPirate;
+      state.insightStudent = iStudent;
 
-      const mapLabel = (v) =>
-        v === "dean"
-          ? "Dean of Panic"
-          : v === "marketing"
-          ? "Marketing Pirate"
-          : "Student Ghost";
-
-      ch2StakeSummary.textContent =
-        `Most useful: ${mapLabel(useful)} · Most emotion-driven: ${mapLabel(
-          emotional
-        )} · Most misleading: ${mapLabel(misleading)}`;
-
-      ch2Summary.style.display = "block";
-      ch2Status.textContent =
-        "Chapter 2 submitted. When ready, move on to Chapter 3.";
+      ch2Status.textContent = "Chapter 2 submitted. Unlocking Chapter 3...";
       ch2Status.className = "status success";
+      setTimeout(() => goToChapter(3), 1000);
     }
 
     ch2Submit.addEventListener("click", submitCh2);
-    toCh3Btn.addEventListener("click", () => {
-      if (!state.storyWhatIs) {
-        ch2Status.textContent =
-          "Submit Chapter 2 first before moving on.";
-        ch2Status.className = "status error";
-        return;
-      }
-      goToChapter(3);
-    });
 
     // CHAPTER 3 logic
     const ch3ChartChoice = document.getElementById("ch3ChartChoice");
     const ch3Missing = document.getElementById("ch3Missing");
     const ch3Rewrite = document.getElementById("ch3Rewrite");
+    const ch3Mockup = document.getElementById("ch3Mockup");
     const ch3Submit = document.getElementById("ch3Submit");
     const ch3Status = document.getElementById("ch3Status");
-    const ch3Summary = document.getElementById("ch3Summary");
-    const ch3ChoiceSummary = document.getElementById("ch3ChoiceSummary");
-    const toCh4Btn = document.getElementById("toCh4");
 
     function submitCh3() {
       const choice = ch3ChartChoice.value;
       const missing = ch3Missing.value.trim();
       const rewrite = ch3Rewrite.value.trim();
+      const mockup = ch3Mockup.value.trim();
 
       if (!choice) {
-        ch3Status.textContent =
-          "Select which chart you’re correcting.";
+        ch3Status.textContent = "Select which chart you’re correcting.";
         ch3Status.className = "status error";
         return;
       }
-      if (missing.length < 20 || rewrite.length < 20) {
-        ch3Status.textContent =
-          "Write at least 2–3 sentences for the missing context and the rewritten interpretation.";
+      if (missing.length < 10 || rewrite.length < 10 || mockup.length < 5) {
+        ch3Status.textContent = "Please complete all fields, including the mockup description.";
         ch3Status.className = "status error";
         return;
       }
@@ -1139,41 +1129,34 @@
       state.ch3ChartChoice = choice;
       state.ch3Missing = missing;
       state.ch3Rewrite = rewrite;
+      state.ch3Mockup = mockup;
 
-      ch3ChoiceSummary.textContent =
-        `You focused on Chart ${choice} and rewrote its meaning with clearer context.`;
-      ch3Summary.style.display = "block";
-      ch3Status.textContent =
-        "Chapter 3 submitted. Move to Chapter 4 when you’re ready.";
+      ch3Status.textContent = "Chapter 3 submitted. Unlocking Final Chapter...";
       ch3Status.className = "status success";
+      setTimeout(() => {
+          // Fill Chapter 4 anchor preview
+          const anchorText = state.anchorMetricId && state.anchorMetricText
+              ? `${state.anchorMetricId}: ${state.anchorMetricText}`
+              : "(No anchor metric saved)";
+          const ch4AnchorPreview = document.getElementById("ch4AnchorPreview");
+          ch4AnchorPreview.innerHTML = `
+            <strong>Anchor metric:</strong> ${anchorText}<br>
+            <strong>Core Insight:</strong> ${state.storyInsight || "..."}
+          `;
+          goToChapter(4);
+      }, 1000);
     }
 
     ch3Submit.addEventListener("click", submitCh3);
-    toCh4Btn.addEventListener("click", () => {
-      if (!state.ch3ChartChoice) {
-        ch3Status.textContent =
-          "Submit Chapter 3 first before moving on.";
-        ch3Status.className = "status error";
-        return;
-      }
-      // Fill Chapter 4 anchor preview
-      const anchorText =
-        state.anchorMetricId && state.anchorMetricText
-          ? `${state.anchorMetricId}: ${state.anchorMetricText}`
-          : "(No anchor metric saved – something went wrong.)";
-      const ch4AnchorPreview = document.getElementById("ch4AnchorPreview");
-      ch4AnchorPreview.innerHTML = `
-        <strong>Anchor metric:</strong> ${anchorText}<br>
-        <strong>Story (short):</strong> ${state.storyInsight || "(Your insight from Chapter 2 will go here.)"}
-      `;
-      goToChapter(4);
-    });
 
     // CHAPTER 4 logic
+    const ch4StoryRecap = document.getElementById("ch4StoryRecap");
     const ch4Motivation = document.getElementById("ch4Motivation");
     const ch4Ability = document.getElementById("ch4Ability");
     const ch4Prompt = document.getElementById("ch4Prompt");
     const ch4Action = document.getElementById("ch4Action");
+    const ch4Feedback = document.getElementById("ch4Feedback");
+    const ch4RevisedAction = document.getElementById("ch4RevisedAction");
     const ch4Submit = document.getElementById("ch4Submit");
     const ch4Status = document.getElementById("ch4Status");
     const ch4Summary = document.getElementById("ch4Summary");
@@ -1181,70 +1164,73 @@
     const copyOutputBtn = document.getElementById("copyOutput");
 
     function submitCh4() {
+      const recap = ch4StoryRecap.value.trim();
       const mot = ch4Motivation.value.trim();
       const abil = ch4Ability.value.trim();
       const pr = ch4Prompt.value.trim();
       const act = ch4Action.value.trim();
+      const fb = ch4Feedback.value.trim();
+      const rev = ch4RevisedAction.value.trim();
 
-      if (
-        mot.length < 20 ||
-        abil.length < 20 ||
-        pr.length < 20 ||
-        act.length < 20
-      ) {
-        ch4Status.textContent =
-          "Write at least 2–3 sentences for each part. This is your final action design.";
+      if (recap.length < 10 || mot.length < 10 || abil.length < 10 || pr.length < 10 || act.length < 10 || fb.length < 5 || rev.length < 10) {
+        ch4Status.textContent = "Please complete all steps, including the Team Swap feedback.";
         ch4Status.className = "status error";
         return;
       }
 
+      state.storyRecap = recap;
       state.actionMotivation = mot;
       state.actionAbility = abil;
       state.actionPrompt = pr;
       state.actionStatement = act;
+      state.feedbackReceived = fb;
+      state.revisedAction = rev;
 
       // Build final output text
       const lines = [];
+      lines.push("=== THE CURIOUS CASE OF THE VANISHING ENGAGEMENT: TEAM REPORT ===");
+      lines.push("");
+      
+      lines.push("--- 1. ANCHOR METRIC ---");
+      lines.push(`Metric: ${state.anchorMetricId ? `${state.anchorMetricId}: ${state.anchorMetricText}` : "(none)"}`);
+      lines.push(`Justification: ${state.anchorJustification}`);
+      lines.push(`Defense: ${state.anchorDefense}`);
+      lines.push(`Rebuttal Strategy: ${state.anchorRebuttal}`);
+      lines.push("");
 
-      lines.push("=== INSIGHT – ANCHOR METRIC ===");
-      lines.push(
-        state.anchorMetricId
-          ? `${state.anchorMetricId}: ${state.anchorMetricText}`
-          : "(No anchor metric captured.)"
-      );
+      lines.push("--- 2. STORY ARC & STAKEHOLDERS ---");
+      lines.push(`What is: ${state.storyWhatIs}`);
+      lines.push(`Conflict: ${state.storyConflict}`);
+      lines.push(`Insight: ${state.storyInsight}`);
+      lines.push(`What could be: ${state.storyCouldBe}`);
+      lines.push(`Dean's Voice: ${state.insightDean}`);
+      lines.push(`Pirate's Voice: ${state.insightPirate}`);
+      lines.push(`Student's Voice: ${state.insightStudent}`);
       lines.push("");
-      lines.push("Justification:");
-      lines.push(state.anchorJustification || "(none)");
+
+      lines.push("--- 3. DATA CONTEXT (CHART) ---");
+      lines.push(`Chart Choice: ${state.ch3ChartChoice}`);
+      lines.push(`Missing Context: ${state.ch3Missing}`);
+      lines.push(`Honest Rewrite: ${state.ch3Rewrite}`);
+      lines.push(`Mockup Description: ${state.ch3Mockup}`);
       lines.push("");
-      lines.push("=== STORY – SPARKLINE (DUARTE) ===");
-      lines.push(`What is: ${state.storyWhatIs || "(none)"}`);
-      lines.push(`Conflict: ${state.storyConflict || "(none)"}`);
-      lines.push(`Insight: ${state.storyInsight || "(none)"}`);
-      lines.push(`What could be: ${state.storyCouldBe || "(none)"}`);
-      lines.push("");
-      lines.push("=== CONTEXT CORRECTION (CHART) ===");
-      lines.push(
-        state.ch3ChartChoice
-          ? `Focused chart: ${state.ch3ChartChoice}`
-          : "Focused chart: (none)"
-      );
-      lines.push(`Missing context: ${state.ch3Missing || "(none)"}`);
-      lines.push(
-        `Rewritten interpretation: ${state.ch3Rewrite || "(none)"}`
-      );
-      lines.push("");
-      lines.push("=== ACTION – FOGG B=MAP ===");
+
+      lines.push("--- 4. ACTION ENGINE (FOGG B=MAP) ---");
       lines.push(`Motivation: ${state.actionMotivation}`);
       lines.push(`Ability: ${state.actionAbility}`);
       lines.push(`Prompt: ${state.actionPrompt}`);
-      lines.push("");
-      lines.push("Final action statement:");
-      lines.push(state.actionStatement);
+      lines.push(`Initial Action: ${state.actionStatement}`);
+      lines.push(`Peer Feedback: ${state.feedbackReceived}`);
+      lines.push(`FINAL REVISED ACTION: ${state.revisedAction}`);
 
       finalOutput.value = lines.join("\n");
       ch4Summary.style.display = "block";
-      ch4Status.textContent =
-        "Adventure complete. Copy this text into your slide or Teams submission.";
+      
+      setTimeout(() => {
+        ch4Summary.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+
+      ch4Status.textContent = "Adventure complete!";
       ch4Status.className = "status success";
     }
 
@@ -1253,11 +1239,15 @@
     copyOutputBtn.addEventListener("click", async () => {
       try {
         await navigator.clipboard.writeText(finalOutput.value);
-        ch4Status.textContent = "Copied to clipboard.";
-        ch4Status.className = "status success";
+        const originalText = copyOutputBtn.innerHTML;
+        copyOutputBtn.innerHTML = "Copied! ✅";
+        copyOutputBtn.style.background = "#fff";
+        setTimeout(() => {
+             copyOutputBtn.innerHTML = originalText;
+             copyOutputBtn.style.background = "#7ddc8a";
+        }, 2000);
       } catch (e) {
-        ch4Status.textContent =
-          "Could not copy automatically. Please select and copy manually.";
+        ch4Status.textContent = "Could not copy automatically. Please select and copy manually.";
         ch4Status.className = "status error";
       }
     });
