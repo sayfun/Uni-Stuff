@@ -817,6 +817,172 @@
       text-transform: uppercase;
     }
 
+    /* Loading overlay */
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, #11182f 0, #020309 60%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1200;
+    }
+
+    .loading-card {
+      max-width: 320px;
+      width: 80%;
+      background: #060816;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.9);
+      padding: 18px 20px 16px;
+      text-align: left;
+    }
+
+    .loading-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .loading-sub {
+      font-size: 12px;
+      color: #cfd2ea;
+      margin-bottom: 10px;
+    }
+
+    .loading-spinner {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.15);
+      border-top-color: #ffb347;
+      margin: 0 auto 8px;
+      animation: spin 0.9s linear infinite;
+    }
+
+    .loading-tip {
+      font-size: 11px;
+      color: #9aa0d0;
+      margin-top: 2px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Level-up toast */
+    #levelup-toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(12px);
+      background: radial-gradient(circle at left, rgba(255,210,110,0.25), rgba(10,10,25,0.98));
+      border-radius: 999px;
+      border: 1px solid rgba(255,210,110,0.5);
+      padding: 6px 12px 6px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: #fff5d2;
+      opacity: 0;
+      pointer-events: none;
+      box-shadow: 0 16px 45px rgba(0,0,0,0.75);
+      z-index: 1100;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    #levelup-toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .levelup-icon {
+      font-size: 16px;
+    }
+
+    .levelup-title {
+      font-weight: 600;
+    }
+
+    .levelup-sub {
+      font-size: 10px;
+    }
+
+    /* Dialog overlay */
+    #dialog-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0,0,0,0.7), rgba(0,0,0,0.94));
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1300;
+    }
+
+    #dialog-overlay.visible {
+      display: flex;
+    }
+
+    .dialog-card {
+      max-width: 540px;
+      width: 90%;
+      background: #050714;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow: 0 22px 70px rgba(0,0,0,0.9);
+      padding: 14px 16px 12px;
+      font-size: 13px;
+      color: #f5f5f7;
+    }
+
+    .dialog-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    #dialog-character {
+      font-weight: 600;
+      font-size: 13px;
+      color: #ffb347;
+    }
+
+    #dialog-close-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.33);
+      background: transparent;
+      color: #f5f5f7;
+      font-size: 11px;
+      padding: 2px 7px;
+      cursor: pointer;
+    }
+
+    #dialog-text {
+      font-size: 12px;
+      color: #dde0ff;
+      min-height: 46px;
+      line-height: 1.5;
+    }
+
+    .dialog-footer {
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    #dialog-next-btn {
+      border-radius: 999px;
+      border: none;
+      padding: 5px 14px;
+      background: #ffb347;
+      color: #221000;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     @media (max-width: 640px) {
       .app {
         padding: 16px 16px 24px;
@@ -1436,6 +1602,39 @@
     </div>
   </div>
 
+  <!-- Loading overlay -->
+  <div id="loading-overlay" style="display: none;">
+    <div class="loading-card">
+      <div class="loading-title">Connecting to Analytics Island...</div>
+      <div class="loading-sub">Syncing council memories, metrics, and drama.</div>
+      <div class="loading-spinner"></div>
+      <div class="loading-tip">Tip: your answers are only stored in this tab. Don’t trust the island.</div>
+    </div>
+  </div>
+
+  <!-- Level-up toast -->
+  <div id="levelup-toast">
+    <div class="levelup-icon">✨</div>
+    <div class="levelup-text">
+      <div class="levelup-title">Level Up!</div>
+      <div class="levelup-sub">You’ve unlocked deeper narrative thinking for this chapter.</div>
+    </div>
+  </div>
+
+  <!-- Monkey Island–style dialog overlay -->
+  <div id="dialog-overlay">
+    <div class="dialog-card">
+      <div class="dialog-header">
+        <span id="dialog-character">Council Member</span>
+        <button type="button" id="dialog-close-btn">✕</button>
+      </div>
+      <div id="dialog-text"></div>
+      <div class="dialog-footer">
+        <button type="button" id="dialog-next-btn">Next line</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Global state
     let currentChapter = 0;
@@ -1535,7 +1734,13 @@
           The sand is warm, the Wi-Fi is questionable, and the only things that washed up with you are six data fragments.
         `;
         
-        goToChapter(1);
+        // Show loading overlay
+        const loadingOverlay = document.getElementById("loading-overlay");
+        loadingOverlay.style.display = "flex";
+        setTimeout(() => {
+            loadingOverlay.style.display = "none";
+            goToChapter(1);
+        }, 2000);
     });
 
     // CHAPTER 1 – metrics setup (HARD MODE: NO LABELS/HINTS)
@@ -1960,15 +2165,6 @@
       setTimeout(() => popup.classList.remove("visible"), 2800);
     }
 
-    // Make these globally accessible for the onclick handlers
-    window.triggerConfused = function() {
-      showCouncilPopup(CONFUSED_MESSAGES[Math.floor(Math.random() * CONFUSED_MESSAGES.length)]);
-    }
-
-    window.triggerDrama = function() {
-      showCouncilPopup(DRAMA_MESSAGES[Math.floor(Math.random() * DRAMA_MESSAGES.length)]);
-    }
-
     function getEmojiState(chars) {
       if (chars < 50) return ["😐", "Type to wake the council..."];
       if (chars < 200) return ["🤔", "Council is listening. Keep going."];
@@ -1982,6 +2178,7 @@
       const emoji = document.getElementById("fun-emoji");
       const status = document.getElementById("fun-status-text");
       const badge = document.getElementById("chapter-badge");
+      const levelupToast = document.getElementById("levelup-toast");
       if (!emoji || !status) return;
 
       let totalChars = 0;
@@ -1999,6 +2196,12 @@
           badgeGiven = true;
           badge.classList.add("unlocked");
           showCouncilPopup("🏅 Badge unlocked: You wrote more than a LinkedIn guru.");
+          
+          // Trigger level-up toast
+          if (levelupToast) {
+              levelupToast.classList.add("visible");
+              setTimeout(() => levelupToast.classList.remove("visible"), 3000);
+          }
         }
       }
 
@@ -2015,6 +2218,132 @@
 
       update();
     }
+    
+    // Dialog System
+    const DIALOG_SCENES = [
+      {
+        character: "Dean of Panic",
+        lines: [
+          "I’ve seen a thousand dashboards and understood maybe five of them.",
+          "If your story doesn’t survive my anxiety, it won’t survive the Senate.",
+          "Start with one clear problem, not eight colorful charts."
+        ]
+      },
+      {
+        character: "Marketing Pirate",
+        lines: [
+          "Listen, I love a good metric, as long as it makes us look amazing.",
+          "If your chart needs a paragraph of explanation, it won’t survive a campaign meeting.",
+          "Give me one number to chase, and one action I can deploy tomorrow."
+        ]
+      },
+      {
+        character: "Student Ghost",
+        lines: [
+          "You keep saying 'engagement', but I only see posts, not people.",
+          "If I don’t know what changes for me, I scroll past your story.",
+          "Data that never becomes a better experience is just nicely formatted noise."
+        ]
+      }
+    ];
+
+    let currentDialogScene = null;
+    let currentDialogIndex = 0;
+
+    function openRandomDialog() {
+      if (!DIALOG_SCENES.length) return;
+
+      currentDialogScene = DIALOG_SCENES[Math.floor(Math.random() * DIALOG_SCENES.length)];
+      currentDialogIndex = 0;
+
+      const overlay = document.getElementById("dialog-overlay");
+      const charEl = document.getElementById("dialog-character");
+      const textEl = document.getElementById("dialog-text");
+      if (!overlay || !charEl || !textEl) return;
+
+      charEl.textContent = currentDialogScene.character;
+      textEl.textContent = currentDialogScene.lines[currentDialogIndex] || "";
+      overlay.classList.add("visible");
+    }
+
+    function advanceDialog() {
+      if (!currentDialogScene) return;
+      const overlay = document.getElementById("dialog-overlay");
+      const textEl = document.getElementById("dialog-text");
+      if (!overlay || !textEl) return;
+
+      currentDialogIndex++;
+      if (currentDialogIndex >= currentDialogScene.lines.length) {
+        overlay.classList.remove("visible");
+        return;
+      }
+      textEl.textContent = currentDialogScene.lines[currentDialogIndex];
+    }
+
+    function closeDialog() {
+      const overlay = document.getElementById("dialog-overlay");
+      if (overlay) {
+        overlay.classList.remove("visible");
+      }
+      currentDialogScene = null;
+      currentDialogIndex = 0;
+    }
+
+    // Wire dialog buttons
+    const nextBtn = document.getElementById("dialog-next-btn");
+    const closeBtn = document.getElementById("dialog-close-btn");
+    if (nextBtn) nextBtn.addEventListener("click", advanceDialog);
+    if (closeBtn) closeBtn.addEventListener("click", closeDialog);
+
+    // Make these globally accessible for the onclick handlers
+    window.triggerConfused = function() {
+      showCouncilPopup(CONFUSED_MESSAGES[Math.floor(Math.random() * CONFUSED_MESSAGES.length)]);
+    };
+
+    window.triggerDrama = function() {
+      openRandomDialog();
+    };
+
+    // --- Loading overlay logic ---
+    (function initLoadingOverlay() {
+      const overlay = document.getElementById("loading-overlay");
+      if (!overlay) return;
+
+      function hideOverlay() {
+        overlay.style.display = "none";
+      }
+
+      // Auto-hide logic is handled by btnStartGame in the main flow, 
+      // but we keep this helper just in case.
+      // The main flow shows it, waits 2s, then hides it.
+    })();
+
+    // --- Level-up watcher (listens for badge unlock) ---
+    (function initLevelUpWatcher() {
+      const badge = document.getElementById("chapter-badge");
+      const toast = document.getElementById("levelup-toast");
+      if (!badge || !toast) return;
+
+      let shown = false;
+
+      function showToast() {
+        if (shown) return;
+        shown = true;
+        toast.classList.add("visible");
+        setTimeout(() => {
+          toast.classList.remove("visible");
+        }, 2600);
+      }
+
+      // Observe class changes on badge
+      const observer = new MutationObserver(() => {
+        if (badge.classList.contains("unlocked")) {
+          showToast();
+        }
+      });
+
+      observer.observe(badge, { attributes: true, attributeFilter: ["class"] });
+    })();
 
     // Run Fun Layer Init when DOM is fully parsed
     document.addEventListener("DOMContentLoaded", initFunLayer);
