@@ -69,6 +69,8 @@
       position: relative;
       overflow: hidden;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header Styles */
@@ -718,38 +720,44 @@
     }
 
     /* Fun Layer UI */
+    #fun-layer-container {
+        margin-top: 40px;
+        border-top: 1px dashed rgba(255,255,255,0.1);
+        padding-top: 20px;
+    }
+
     #fun-status-bar {
-      margin-top: 16px;
-      padding: 6px 10px;
+      padding: 6px 14px;
       border-radius: 999px;
       background: rgba(5, 7, 20, 0.85);
       border: 1px solid rgba(255, 255, 255, 0.08);
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      font-size: 12px;
+      gap: 10px;
+      font-size: 14px;
       color: #cfd2ea;
     }
 
     #fun-emoji {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .fun-buttons-row {
-      margin-top: 8px;
+      margin-top: 12px;
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .fun-btn {
       border-radius: 999px;
-      padding: 5px 12px;
+      padding: 6px 16px;
       border: 1px solid rgba(255, 255, 255, 0.25);
       background: transparent;
       color: #f5f5f7;
-      font-size: 12px;
+      font-size: 13px;
       cursor: pointer;
+      font-family: var(--main-font);
     }
 
     .fun-btn:hover {
@@ -764,21 +772,21 @@
     /* Council popup */
     #council-popup {
       position: fixed;
-      right: 16px;
-      bottom: 24px;
-      max-width: 260px;
-      font-size: 12px;
+      right: 20px;
+      bottom: 20px;
+      max-width: 280px;
+      font-size: 13px;
       color: #fefefe;
       background: rgba(9, 11, 28, 0.96);
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 12px 16px;
       box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
       opacity: 0;
       pointer-events: none;
-      transform: translateY(8px);
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      z-index: 900;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 2000; /* High z-index ensures visibility */
     }
 
     #council-popup.visible {
@@ -788,19 +796,19 @@
 
     /* Chapter badge */
     #chapter-badge {
-      margin-top: 10px;
-      padding: 6px 10px;
+      margin-top: 12px;
+      padding: 6px 14px;
       border-radius: 999px;
       border: 1px solid rgba(255,200,90,0.4);
       background: radial-gradient(circle at left, rgba(255,200,90,0.3), rgba(8,9,24,0.95));
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      font-size: 11px;
+      gap: 8px;
+      font-size: 12px;
       color: #ffe9b3;
       opacity: 0;
       transform: translateY(4px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     #chapter-badge.unlocked {
@@ -809,12 +817,13 @@
     }
 
     .badge-icon {
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .badge-text {
       letter-spacing: 0.03em;
       text-transform: uppercase;
+      font-weight: 600;
     }
 
     /* Loading overlay */
@@ -825,7 +834,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 1200;
+      z-index: 2100;
     }
 
     .loading-card {
@@ -835,36 +844,38 @@
       border-radius: 16px;
       border: 1px solid rgba(255,255,255,0.16);
       box-shadow: 0 18px 60px rgba(0,0,0,0.9);
-      padding: 18px 20px 16px;
-      text-align: left;
+      padding: 24px;
+      text-align: center;
     }
 
     .loading-title {
-      font-size: 15px;
+      font-size: 18px;
       font-weight: 600;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
+      color: #fff;
     }
 
     .loading-sub {
-      font-size: 12px;
+      font-size: 13px;
       color: #cfd2ea;
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     .loading-spinner {
-      width: 34px;
-      height: 34px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.15);
-      border-top-color: #ffb347;
-      margin: 0 auto 8px;
-      animation: spin 0.9s linear infinite;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: var(--accent);
+      margin: 0 auto 12px;
+      animation: spin 1s linear infinite;
     }
 
     .loading-tip {
-      font-size: 11px;
+      font-size: 12px;
       color: #9aa0d0;
-      margin-top: 2px;
+      margin-top: 4px;
+      opacity: 0.8;
     }
 
     @keyframes spin {
@@ -875,22 +886,22 @@
     #levelup-toast {
       position: fixed;
       left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%) translateY(12px);
+      bottom: 30px;
+      transform: translateX(-50%) translateY(20px);
       background: radial-gradient(circle at left, rgba(255,210,110,0.25), rgba(10,10,25,0.98));
       border-radius: 999px;
       border: 1px solid rgba(255,210,110,0.5);
-      padding: 6px 12px 6px 10px;
+      padding: 8px 20px;
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-size: 11px;
+      gap: 12px;
+      font-size: 13px;
       color: #fff5d2;
       opacity: 0;
       pointer-events: none;
       box-shadow: 0 16px 45px rgba(0,0,0,0.75);
-      z-index: 1100;
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 2200;
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     #levelup-toast.visible {
@@ -899,26 +910,25 @@
     }
 
     .levelup-icon {
-      font-size: 16px;
+      font-size: 20px;
     }
 
     .levelup-title {
-      font-weight: 600;
-    }
-
-    .levelup-sub {
-      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 14px;
     }
 
     /* Dialog overlay */
     #dialog-overlay {
       position: fixed;
       inset: 0;
-      background: radial-gradient(circle at top, rgba(0,0,0,0.7), rgba(0,0,0,0.94));
+      background: rgba(0,0,0,0.85);
       display: none;
       align-items: center;
       justify-content: center;
-      z-index: 1300;
+      z-index: 2300;
+      backdrop-filter: blur(4px);
     }
 
     #dialog-overlay.visible {
@@ -928,59 +938,69 @@
     .dialog-card {
       max-width: 540px;
       width: 90%;
-      background: #050714;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.18);
-      box-shadow: 0 22px 70px rgba(0,0,0,0.9);
-      padding: 14px 16px 12px;
-      font-size: 13px;
+      background: #0d1221;
+      border-radius: 16px;
+      border: 2px solid var(--accent);
+      box-shadow: 0 0 50px rgba(255, 179, 71, 0.2);
+      padding: 20px;
+      font-size: 15px;
       color: #f5f5f7;
+      position: relative;
     }
 
     .dialog-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 8px;
     }
 
     #dialog-character {
+      font-family: var(--retro-font);
       font-weight: 600;
-      font-size: 13px;
-      color: #ffb347;
+      font-size: 20px;
+      color: var(--accent);
     }
 
     #dialog-close-btn {
-      border-radius: 999px;
-      border: 1px solid rgba(255,255,255,0.33);
       background: transparent;
-      color: #f5f5f7;
-      font-size: 11px;
-      padding: 2px 7px;
+      border: none;
+      color: #fff;
+      font-size: 20px;
       cursor: pointer;
+      opacity: 0.7;
+    }
+    #dialog-close-btn:hover {
+        opacity: 1;
     }
 
     #dialog-text {
-      font-size: 12px;
-      color: #dde0ff;
-      min-height: 46px;
-      line-height: 1.5;
+      font-size: 16px;
+      color: #e0e0e0;
+      min-height: 60px;
+      line-height: 1.6;
+      font-family: var(--main-font);
     }
 
     .dialog-footer {
-      margin-top: 10px;
+      margin-top: 16px;
       text-align: right;
     }
 
     #dialog-next-btn {
-      border-radius: 999px;
+      border-radius: 4px;
       border: none;
-      padding: 5px 14px;
-      background: #ffb347;
+      padding: 8px 20px;
+      background: var(--accent);
       color: #221000;
-      font-size: 12px;
-      font-weight: 600;
+      font-family: var(--retro-font);
+      font-size: 18px;
       cursor: pointer;
+    }
+    #dialog-next-btn:hover {
+        filter: brightness(1.1);
     }
 
     @media (max-width: 640px) {
@@ -1527,24 +1547,6 @@
           placeholder="In 5–7 sentences, reflect on what you learned about turning data into a story with a clear action."></textarea>
       </div>
 
-      <!-- Fun Layer UI -->
-      <div id="fun-status-bar">
-        <span id="fun-emoji">😐</span>
-        <span id="fun-status-text">Type to wake the council...</span>
-      </div>
-
-      <div class="fun-buttons-row">
-        <button type="button" class="fun-btn" onclick="triggerConfused()">I feel confused</button>
-        <button type="button" class="fun-btn fun-btn-ghost" onclick="triggerDrama()">Give me more drama</button>
-      </div>
-
-      <div id="chapter-badge">
-        <span class="badge-icon">🏅</span>
-        <span class="badge-text">Chapter progress badge unlocked</span>
-      </div>
-
-      <div id="council-popup"></div>
-
       <div class="btn-row">
         <button class="btn-primary" onclick="triggerFinalBoss()">Finish Quest</button>
         <button class="btn-secondary" onclick="window.print()">🖨️ Print / Save as PDF</button>
@@ -1569,6 +1571,24 @@
         </div>
       </div>
     </section>
+
+    <!-- Global Fun Layer (Outside Chapters) -->
+    <div id="fun-layer-container">
+      <div id="fun-status-bar">
+        <span id="fun-emoji">😐</span>
+        <span id="fun-status-text">Type to wake the council...</span>
+      </div>
+
+      <div class="fun-buttons-row">
+        <button type="button" class="fun-btn" onclick="triggerConfused()">I feel confused</button>
+        <button type="button" class="fun-btn fun-btn-ghost" onclick="triggerDrama()">Give me more drama</button>
+      </div>
+
+      <div id="chapter-badge">
+        <span class="badge-icon">🏅</span>
+        <span class="badge-text">Chapter progress badge unlocked</span>
+      </div>
+    </div>
 
   </div>
 
@@ -1634,6 +1654,9 @@
       </div>
     </div>
   </div>
+  
+  <!-- Council Popup (Small toast) -->
+  <div id="council-popup"></div>
 
   <script>
     // Global state
