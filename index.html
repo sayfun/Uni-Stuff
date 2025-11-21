@@ -717,6 +717,106 @@
       font-style: italic;
     }
 
+    /* Fun Layer UI */
+    #fun-status-bar {
+      margin-top: 16px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(5, 7, 20, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #cfd2ea;
+    }
+
+    #fun-emoji {
+      font-size: 16px;
+    }
+
+    .fun-buttons-row {
+      margin-top: 8px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .fun-btn {
+      border-radius: 999px;
+      padding: 5px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: transparent;
+      color: #f5f5f7;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .fun-btn:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .fun-btn-ghost {
+      border-style: dashed;
+      opacity: 0.9;
+    }
+
+    /* Council popup */
+    #council-popup {
+      position: fixed;
+      right: 16px;
+      bottom: 24px;
+      max-width: 260px;
+      font-size: 12px;
+      color: #fefefe;
+      background: rgba(9, 11, 28, 0.96);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      padding: 8px 10px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.7);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 900;
+    }
+
+    #council-popup.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Chapter badge */
+    #chapter-badge {
+      margin-top: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,200,90,0.4);
+      background: radial-gradient(circle at left, rgba(255,200,90,0.3), rgba(8,9,24,0.95));
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      color: #ffe9b3;
+      opacity: 0;
+      transform: translateY(4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+
+    #chapter-badge.unlocked {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .badge-icon {
+      font-size: 14px;
+    }
+
+    .badge-text {
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
     @media (max-width: 640px) {
       .app {
         padding: 16px 16px 24px;
@@ -1260,6 +1360,24 @@
         <textarea id="ch5Reflection" class="std-input"
           placeholder="In 5–7 sentences, reflect on what you learned about turning data into a story with a clear action."></textarea>
       </div>
+
+      <!-- Fun Layer UI -->
+      <div id="fun-status-bar">
+        <span id="fun-emoji">😐</span>
+        <span id="fun-status-text">Type to wake the council...</span>
+      </div>
+
+      <div class="fun-buttons-row">
+        <button type="button" class="fun-btn" onclick="triggerConfused()">I feel confused</button>
+        <button type="button" class="fun-btn fun-btn-ghost" onclick="triggerDrama()">Give me more drama</button>
+      </div>
+
+      <div id="chapter-badge">
+        <span class="badge-icon">🏅</span>
+        <span class="badge-text">Chapter progress badge unlocked</span>
+      </div>
+
+      <div id="council-popup"></div>
 
       <div class="btn-row">
         <button class="btn-primary" onclick="triggerFinalBoss()">Finish Quest</button>
@@ -1806,6 +1924,105 @@
     // Init
     renderMetrics();
     updateChapterUI();
+
+    // Fun Layer Logic
+    const COUNCIL_MESSAGES = [
+      "Dean of Panic: Are you absolutely sure that metric isn’t just vibes?",
+      "Marketing Pirate: Can we… add more hype and less context?",
+      "Student Ghost: I still don’t feel seen by this dashboard.",
+      "Dean of Panic: If this fails, it’s going in the Senate report.",
+      "Marketing Pirate: Have you tried calling it a 'growth story'?",
+      "Student Ghost: I’m drowning in numbers, not meaning."
+    ];
+
+    const CONFUSED_MESSAGES = [
+      "Confusion is the loading screen for understanding.",
+      "If you feel lost, good. It means your brain is actually on.",
+      "Analytics without confusion is just superficial reporting.",
+      "Write the messy version first. Clarity comes second.",
+      "You're not behind. The problem is genuinely weird."
+    ];
+
+    const DRAMA_MESSAGES = [
+      "Dean of Panic: If this metric drops 2% we cancel the whole program.",
+      "Marketing Pirate: I changed the headline without telling you. You're welcome.",
+      "Student Ghost: I clicked 'agree' on your survey without reading it.",
+      "Dean of Panic: Why is this number red? Red is bad. Make it green.",
+      "Marketing Pirate: Can we remove the limitations slide? It ruins the mood.",
+      "Student Ghost: I only saw your campaign because my friend screenshotted it."
+    ];
+
+    function showCouncilPopup(msg) {
+      const popup = document.getElementById("council-popup");
+      if (!popup) return;
+      popup.textContent = msg;
+      popup.classList.add("visible");
+      setTimeout(() => popup.classList.remove("visible"), 2800);
+    }
+
+    // Make these globally accessible for the onclick handlers
+    window.triggerConfused = function() {
+      showCouncilPopup(CONFUSED_MESSAGES[Math.floor(Math.random() * CONFUSED_MESSAGES.length)]);
+    }
+
+    window.triggerDrama = function() {
+      showCouncilPopup(DRAMA_MESSAGES[Math.floor(Math.random() * DRAMA_MESSAGES.length)]);
+    }
+
+    function getEmojiState(chars) {
+      if (chars < 50) return ["😐", "Type to wake the council..."];
+      if (chars < 200) return ["🤔", "Council is listening. Keep going."];
+      if (chars < 500) return ["🧠", "Your brain is officially online."];
+      if (chars < 1000) return ["🔥", "Narrative engine overheating."];
+      return ["🐉", "Boss-level thinking unlocked."];
+    }
+
+    function initFunLayer() {
+      const inputs = document.querySelectorAll("textarea");
+      const emoji = document.getElementById("fun-emoji");
+      const status = document.getElementById("fun-status-text");
+      const badge = document.getElementById("chapter-badge");
+      if (!emoji || !status) return;
+
+      let totalChars = 0;
+      let popupCooldown = 0;
+      let badgeGiven = false;
+
+      function update() {
+        totalChars = 0;
+        inputs.forEach(i => totalChars += (i.value || "").length);
+        const [em, text] = getEmojiState(totalChars);
+        emoji.textContent = em;
+        status.textContent = text;
+
+        if (!badgeGiven && totalChars >= 400) {
+          badgeGiven = true;
+          badge.classList.add("unlocked");
+          showCouncilPopup("🏅 Badge unlocked: You wrote more than a LinkedIn guru.");
+        }
+      }
+
+      inputs.forEach(field => {
+        field.addEventListener("input", update);
+        field.addEventListener("focus", () => {
+          const now = Date.now();
+          if (now - popupCooldown > 4000) {
+            popupCooldown = now;
+            showCouncilPopup(COUNCIL_MESSAGES[Math.floor(Math.random() * COUNCIL_MESSAGES.length)]);
+          }
+        });
+      });
+
+      update();
+    }
+
+    // Run Fun Layer Init when DOM is fully parsed
+    document.addEventListener("DOMContentLoaded", initFunLayer);
+    // Fallback in case DOMContentLoaded already fired
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(initFunLayer, 100);
+    }
+
   </script>
 </body>
 </html>
