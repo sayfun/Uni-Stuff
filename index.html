@@ -133,6 +133,51 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* Start Screen specific styles */
+    .start-hero {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .start-icon {
+        font-size: 64px;
+        margin-bottom: 20px;
+        display: block;
+        animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .start-title {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 16px;
+    }
+    .start-desc {
+        font-size: 16px;
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto 32px;
+        line-height: 1.6;
+    }
+    .btn-start {
+        background: var(--accent);
+        color: #211000;
+        font-weight: 700;
+        font-size: 16px;
+        padding: 12px 32px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-start:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px var(--accent-soft);
+    }
+
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -496,15 +541,28 @@
           <span class="icon">🧭</span>
           <span>The Curious Case of the Vanishing Engagement</span>
         </h1>
-        <div class="chapter-tag" id="chapterTag">Chapter 1 of 4</div>
+        <div class="chapter-tag" id="chapterTag">Briefing</div>
       </div>
       <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
       </div>
     </header>
 
+    <!-- START SCREEN (Chapter 0) -->
+    <section id="chapter-0" class="chapter-screen active">
+        <div class="start-hero">
+            <span class="start-icon">🕵️‍♀️</span>
+            <div class="start-title">The Case of the Vanishing Engagement</div>
+            <p class="start-desc">
+                Engagement metrics at MUIC have dropped to zero. The logs are corrupted. The stakeholders are panicking.<br><br>
+                Your mission: Analyze the data fragments, navigate conflicting stakeholder opinions, and design a concrete action plan to save the semester.
+            </p>
+            <button class="btn-start" id="btnStartGame">Begin Investigation ➡️</button>
+        </div>
+    </section>
+
     <!-- CHAPTER 1 -->
-    <section id="chapter-1" class="chapter-screen active">
+    <section id="chapter-1" class="chapter-screen">
       <div class="intro-card">
         <div class="intro-title">Chapter 1 · The Island of Misleading Metrics 🏝️</div>
         <p>
@@ -908,7 +966,7 @@
 
   <script>
     // Global state
-    let currentChapter = 1;
+    let currentChapter = 0;
     const totalChapters = 4;
 
     const state = {
@@ -954,9 +1012,14 @@
       const active = document.getElementById(`chapter-${currentChapter}`);
       if (active) active.classList.add("active");
 
-      chapterTag.textContent = `Chapter ${currentChapter} of ${totalChapters}`;
-      const pct = (currentChapter - 1) / (totalChapters - 1 || 1) * 100;
-      progressFill.style.width = `${pct}%`;
+      if (currentChapter === 0) {
+          chapterTag.textContent = "Briefing";
+          progressFill.style.width = "0%";
+      } else {
+          chapterTag.textContent = `Chapter ${currentChapter} of ${totalChapters}`;
+          const pct = (currentChapter - 1) / (totalChapters - 1 || 1) * 100;
+          progressFill.style.width = `${pct}%`;
+      }
     }
 
     function goToChapter(n) {
@@ -964,6 +1027,11 @@
       updateChapterUI();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    
+    // Start Screen Logic
+    document.getElementById("btnStartGame").addEventListener("click", () => {
+        goToChapter(1);
+    });
 
     // CHAPTER 1 – metrics setup (HARD MODE: NO LABELS/HINTS)
     const metrics = [
