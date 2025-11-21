@@ -1547,6 +1547,24 @@
           placeholder="In 5–7 sentences, reflect on what you learned about turning data into a story with a clear action."></textarea>
       </div>
 
+      <!-- Fun Layer UI -->
+      <div id="fun-layer-container">
+        <div id="fun-status-bar">
+          <span id="fun-emoji">😐</span>
+          <span id="fun-status-text">Type to wake the council...</span>
+        </div>
+
+        <div class="fun-buttons-row">
+          <button type="button" class="fun-btn" onclick="triggerConfused()">I feel confused</button>
+          <button type="button" class="fun-btn fun-btn-ghost" onclick="triggerDrama()">Give me more drama</button>
+        </div>
+
+        <div id="chapter-badge">
+          <span class="badge-icon">🏅</span>
+          <span class="badge-text">Chapter progress badge unlocked</span>
+        </div>
+      </div>
+
       <div class="btn-row">
         <button class="btn-primary" onclick="triggerFinalBoss()">Finish Quest</button>
         <button class="btn-secondary" onclick="window.print()">🖨️ Print / Save as PDF</button>
@@ -1571,24 +1589,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Global Fun Layer (Outside Chapters) -->
-    <div id="fun-layer-container">
-      <div id="fun-status-bar">
-        <span id="fun-emoji">😐</span>
-        <span id="fun-status-text">Type to wake the council...</span>
-      </div>
-
-      <div class="fun-buttons-row">
-        <button type="button" class="fun-btn" onclick="triggerConfused()">I feel confused</button>
-        <button type="button" class="fun-btn fun-btn-ghost" onclick="triggerDrama()">Give me more drama</button>
-      </div>
-
-      <div id="chapter-badge">
-        <span class="badge-icon">🏅</span>
-        <span class="badge-text">Chapter progress badge unlocked</span>
-      </div>
-    </div>
 
   </div>
 
@@ -2159,8 +2159,12 @@
       "Marketing Pirate: Can we… add more hype and less context?",
       "Student Ghost: I still don’t feel seen by this dashboard.",
       "Dean of Panic: If this fails, it’s going in the Senate report.",
-      "Marketing Pirate: Have you tried calling it a 'growth story'?",
-      "Student Ghost: I’m drowning in numbers, not meaning."
+      "Marketing Pirate: If the chart is confusing but looks premium, is that… bad?",
+      "Student Ghost: I’m drowning in numbers, not meaning.",
+      "Dean of Panic: Why are there four KPIs when my brain can handle one?",
+      "Marketing Pirate: Can we rename this metric to ‘victory rate’?",
+      "Student Ghost: I clicked your survey, got bored, and closed it. Adjust your funnel.",
+      "Dean of Panic: Is this a story or a crime scene report? I can’t tell."
     ];
 
     const CONFUSED_MESSAGES = [
@@ -2168,16 +2172,21 @@
       "If you feel lost, good. It means your brain is actually on.",
       "Analytics without confusion is just superficial reporting.",
       "Write the messy version first. Clarity comes second.",
-      "You're not behind. The problem is genuinely weird."
+      "You're not behind. The problem is genuinely weird.",
+      "If this made sense instantly, it probably wouldn’t be worth studying.",
+      "Confusion is cheaper than making the wrong decision with fake certainty.",
+      "Breathe. Then rewrite one sentence to be painfully simple."
     ];
 
     const DRAMA_MESSAGES = [
       "Dean of Panic: If this metric drops 2% we cancel the whole program.",
-      "Marketing Pirate: I changed the headline without telling you. You're welcome.",
+      "Marketing Pirate: I changed the headline without telling you. You’re welcome.",
       "Student Ghost: I clicked 'agree' on your survey without reading it.",
       "Dean of Panic: Why is this number red? Red is bad. Make it green.",
       "Marketing Pirate: Can we remove the limitations slide? It ruins the mood.",
-      "Student Ghost: I only saw your campaign because my friend screenshotted it."
+      "Student Ghost: I only saw your campaign because my friend screenshotted it.",
+      "Dean of Panic: Present the worst-case scenario first so I can emotionally prepare.",
+      "Marketing Pirate: If it doesn’t fit on a slide, it doesn’t exist."
     ];
 
     function showCouncilPopup(msg) {
@@ -2249,7 +2258,8 @@
         lines: [
           "I’ve seen a thousand dashboards and understood maybe five of them.",
           "If your story doesn’t survive my anxiety, it won’t survive the Senate.",
-          "Start with one clear problem, not eight colorful charts."
+          "Start with one clear problem, not eight colorful charts.",
+          "If you can’t explain the risk in one sentence, it’s not going to committee."
         ]
       },
       {
@@ -2257,7 +2267,8 @@
         lines: [
           "Listen, I love a good metric, as long as it makes us look amazing.",
           "If your chart needs a paragraph of explanation, it won’t survive a campaign meeting.",
-          "Give me one number to chase, and one action I can deploy tomorrow."
+          "Give me one number to chase, and one action I can deploy tomorrow.",
+          "If the insight doesn’t change the copy, it was just decoration."
         ]
       },
       {
@@ -2265,7 +2276,8 @@
         lines: [
           "You keep saying 'engagement', but I only see posts, not people.",
           "If I don’t know what changes for me, I scroll past your story.",
-          "Data that never becomes a better experience is just nicely formatted noise."
+          "Data that never becomes a better experience is just nicely formatted noise.",
+          "If your solution ignores my time, I will ignore your solution."
         ]
       }
     ];
