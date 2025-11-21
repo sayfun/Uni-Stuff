@@ -3,18 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <title>The Curious Case of the Vanishing Engagement</title>
+  <!-- Retro Font for that Monkey Island vibe -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --bg: #0b1020;
       --bg-alt: #151a2b;
       --card-bg: #1e2538;
-      --accent: #ffb347;
+      --accent: #ffb347; /* Amber/Gold for pirate vibe */
       --accent-soft: rgba(255, 179, 71, 0.2);
       --text-main: #f5f5f7;
       --text-muted: #a4a9c0;
       --danger: #ff5c5c;
       --success: #7ddc8a;
-      --radius: 10px;
+      --radius: 8px;
+      --retro-font: "VT323", monospace;
+      --main-font: "Inter", system-ui, sans-serif;
     }
 
     * {
@@ -24,13 +31,31 @@
     body {
       margin: 0;
       padding: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-        sans-serif;
-      background: radial-gradient(circle at top, #18213e 0, #050714 55%);
+      font-family: var(--main-font);
+      background-color: var(--bg);
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(30, 37, 56, 0.5) 0%, transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(30, 37, 56, 0.5) 0%, transparent 25%);
       color: var(--text-main);
       display: flex;
       justify-content: center;
       padding: 24px;
+      min-height: 100vh;
+    }
+
+    /* CRT Scanline Effect */
+    body::before {
+      content: " ";
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+      background-size: 100% 4px;
+      z-index: 999;
+      pointer-events: none;
     }
 
     .app {
@@ -38,11 +63,15 @@
       width: 100%;
       background: linear-gradient(145deg, #0d1221, #090b16);
       border-radius: 16px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
       padding: 24px 24px 30px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
     }
 
+    /* Header Styles */
     header {
       border-bottom: 1px solid rgba(255, 255, 255, 0.07);
       padding-bottom: 16px;
@@ -50,36 +79,43 @@
     }
 
     .subtitle {
+      font-family: var(--retro-font);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-size: 11px;
-      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      font-size: 18px;
+      color: var(--accent);
       margin-bottom: 4px;
+      text-shadow: 0 0 5px rgba(255, 179, 71, 0.3);
     }
 
     h1 {
       margin: 0;
-      font-size: 22px;
+      font-family: var(--retro-font);
+      font-size: 32px;
+      font-weight: 400;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      letter-spacing: 0.02em;
     }
 
     h1 span.icon {
-      font-size: 22px;
+      font-size: 32px;
     }
 
     .chapter-tag {
-      font-size: 12px;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-family: var(--retro-font);
+      font-size: 18px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
       color: var(--text-muted);
+      background: rgba(0,0,0,0.2);
     }
 
     .progress-bar {
-      margin-top: 8px;
-      height: 4px;
+      margin-top: 12px;
+      height: 6px;
       width: 100%;
       background: rgba(255, 255, 255, 0.06);
       border-radius: 999px;
@@ -89,145 +125,193 @@
     .progress-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--accent), #ffd38d);
-      transition: width 0.3s ease-out;
+      background: linear-gradient(90deg, var(--accent), #ff8c42);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 0 10px rgba(255, 179, 71, 0.5);
     }
 
+    /* Common Components */
     .intro-card {
-      background: rgba(10, 15, 32, 0.95);
+      background: rgba(15, 20, 35, 0.95);
       border-radius: 12px;
-      padding: 14px 16px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      margin-bottom: 18px;
-      font-size: 13px;
+      padding: 20px;
+      border-left: 4px solid var(--accent);
+      margin-bottom: 24px;
+      font-size: 15px;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.6;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
 
     .intro-title {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 4px;
-      color: var(--accent);
+      font-family: var(--retro-font);
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      letter-spacing: 0.05em;
     }
 
     .section-title {
-      font-size: 14px;
+      font-family: var(--retro-font);
+      font-size: 20px;
       text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--text-muted);
-      margin: 18px 0 10px;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin: 24px 0 14px;
+      border-bottom: 1px dashed rgba(255,255,255,0.1);
+      padding-bottom: 4px;
+      display: inline-block;
     }
 
     .chapter-screen {
       display: none;
-      animation: fadeIn 0.25s ease-out;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
 
     .chapter-screen.active {
       display: block;
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Animations */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-6px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    @keyframes bob {
+        0% { transform: translateY(0px) rotate(0deg); }
+        25% { transform: translateY(-4px) rotate(3deg); }
+        50% { transform: translateY(0px) rotate(0deg); }
+        75% { transform: translateY(-4px) rotate(-3deg); }
+        100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    .bob-icon {
+        display: inline-block;
+        animation: bob 4s ease-in-out infinite;
     }
 
     /* Start Screen specific styles */
     .start-hero {
         text-align: center;
-        padding: 40px 20px;
+        padding: 60px 20px;
     }
     .start-icon {
-        font-size: 64px;
-        margin-bottom: 20px;
+        font-size: 80px;
+        margin-bottom: 24px;
         display: block;
-        animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-        0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-        100% { transform: translateY(0px); }
+        text-shadow: 0 0 30px rgba(255, 179, 71, 0.3);
     }
     .start-title {
-        font-size: 28px;
-        font-weight: 700;
+        font-family: var(--retro-font);
+        font-size: 42px;
         color: var(--text-main);
-        margin-bottom: 16px;
+        margin-bottom: 20px;
+        line-height: 1.1;
+        text-shadow: 2px 2px 0px #000;
     }
     .start-desc {
         font-size: 16px;
         color: var(--text-muted);
         max-width: 600px;
-        margin: 0 auto 32px;
+        margin: 0 auto 40px;
         line-height: 1.6;
     }
+    
+    .name-input-container {
+        max-width: 300px;
+        margin: 0 auto 24px;
+    }
+    
+    .name-input {
+        width: 100%;
+        background: rgba(0,0,0,0.3);
+        border: 2px solid var(--accent);
+        color: var(--text-main);
+        font-family: var(--retro-font);
+        font-size: 20px;
+        padding: 12px;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        outline: none;
+        transition: box-shadow 0.3s;
+    }
+    
+    .name-input:focus {
+        box-shadow: 0 0 15px var(--accent-soft);
+    }
+
     .btn-start {
         background: var(--accent);
         color: #211000;
-        font-weight: 700;
-        font-size: 16px;
-        padding: 12px 32px;
-        border-radius: 999px;
+        font-family: var(--retro-font);
+        font-size: 24px;
+        padding: 12px 40px;
+        border-radius: 4px;
         border: none;
         cursor: pointer;
-        transition: transform 0.2s, box-shadow 0.2s;
+        transition: transform 0.1s, box-shadow 0.1s, filter 0.1s;
+        box-shadow: 0 4px 0 #c48b36; /* Retro 3D button look */
     }
     .btn-start:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px var(--accent-soft);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 0 #c48b36;
+        filter: brightness(1.1);
+    }
+    .btn-start:active {
+        transform: translateY(2px);
+        box-shadow: 0 0 0 #c48b36;
     }
 
+    /* Cards & Grid */
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 12px;
-      margin-bottom: 16px;
+      gap: 16px;
+      margin-bottom: 24px;
     }
 
     .metric-card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 14px 14px 16px;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
       cursor: pointer;
       position: relative;
-      transition: transform 0.12s ease-out, box-shadow 0.12s ease-out,
-        border-color 0.12s ease-out, background 0.12s ease-out;
-      font-size: 13px;
+      transition: all 0.2s ease;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 8px;
     }
 
     .metric-card:hover {
-      transform: translateY(-1px);
+      transform: translateY(-4px);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
       border-color: rgba(255, 179, 71, 0.5);
     }
 
     .metric-card.selected {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(255, 179, 71, 0.7),
-        0 14px 30px rgba(0, 0, 0, 0.7);
-      background: linear-gradient(
-        145deg,
-        rgba(255, 179, 71, 0.15),
-        rgba(12, 18, 40, 0.98)
-      );
+      box-shadow: 0 0 0 2px var(--accent), 0 14px 30px rgba(0, 0, 0, 0.7);
+      background: linear-gradient(145deg, rgba(255, 179, 71, 0.1), rgba(30, 37, 56, 0.9));
     }
 
     .metric-id {
-      font-weight: 600;
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+      font-family: var(--retro-font);
+      font-size: 16px;
       color: var(--accent);
+      letter-spacing: 0.05em;
     }
 
     .metric-text {
       font-size: 14px;
-      line-height: 1.4;
+      line-height: 1.45;
       color: var(--text-main);
     }
 
@@ -235,20 +319,21 @@
       position: absolute;
       top: 12px;
       right: 12px;
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .metric-radio-dot {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: transparent;
+      transition: background 0.2s;
     }
 
     .metric-card.selected .metric-radio {
@@ -259,234 +344,267 @@
       background: var(--accent);
     }
 
+    /* Tasks & Forms */
     .task-box {
       background: var(--bg-alt);
       border-radius: var(--radius);
-      padding: 12px 14px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      margin-bottom: 14px;
-      font-size: 13px;
-      color: var(--text-main);
+      padding: 16px 20px;
+      border-left: 4px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
     }
 
     .task-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-      font-size: 13px;
+      font-family: var(--retro-font);
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #fff;
+      letter-spacing: 0.05em;
     }
 
     .task-text {
       color: var(--text-muted);
       line-height: 1.5;
-      font-size: 13px;
+      font-size: 14px;
     }
     
     .task-box ul {
-        margin: 6px 0 0 18px;
+        margin: 8px 0 0 20px;
         padding-left: 0;
-        font-size: 12px;
+        font-size: 13px;
         color: var(--text-muted);
+    }
+    
+    .task-box ul li {
+        margin-bottom: 4px;
     }
 
     .form-group {
-      margin-bottom: 12px;
+      margin-bottom: 16px;
     }
 
     label {
-      font-size: 13px;
+      font-family: var(--retro-font);
+      font-size: 18px;
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       color: var(--text-main);
+      letter-spacing: 0.03em;
+    }
+    
+    .mini-label {
+      font-family: var(--retro-font);
+      font-size: 16px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      margin-bottom: 6px;
     }
 
     textarea,
     select,
-    input[type="text"] {
+    input[type="text"].std-input {
       width: 100%;
-      border-radius: 8px;
+      border-radius: var(--radius);
       border: 1px solid rgba(255, 255, 255, 0.15);
       background: #050714;
       color: var(--text-main);
-      padding: 7px 9px;
-      font-size: 13px;
+      padding: 12px;
+      font-family: var(--main-font);
+      font-size: 14px;
       outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
 
     textarea {
-      min-height: 80px;
+      min-height: 90px;
       resize: vertical;
+      line-height: 1.5;
     }
 
     textarea:focus,
     select:focus,
-    input[type="text"]:focus {
+    input[type="text"].std-input:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(255, 179, 71, 0.4);
+      box-shadow: 0 0 0 1px rgba(255, 179, 71, 0.3);
     }
 
     select {
-      height: 32px;
+      height: 42px;
+      cursor: pointer;
     }
 
     .helper-text {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
-      margin-top: 3px;
+      margin-top: 4px;
+      font-style: italic;
     }
 
+    /* Buttons */
     .btn-row {
       display: flex;
-      gap: 8px;
+      gap: 12px;
       align-items: center;
-      margin-top: 6px;
+      margin-top: 24px;
       flex-wrap: wrap;
     }
 
-    button {
-      border-radius: 999px;
-      padding: 7px 16px;
-      border: none;
-      font-size: 13px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .btn-primary {
+    button.btn-primary {
       background: var(--accent);
       color: #211000;
-      font-weight: 600;
+      font-family: var(--retro-font);
+      font-weight: 400;
+      font-size: 20px;
+      padding: 10px 24px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #c48b36;
+      transition: transform 0.1s;
     }
 
-    .btn-primary:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    button.btn-primary:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+    }
+    
+    button.btn-primary:active {
+      transform: translateY(2px);
+      box-shadow: 0 0 0 #c48b36;
+    }
+    
+    button.btn-secondary {
+        background: transparent;
+        border: 1px solid rgba(255,255,255,0.3);
+        color: var(--text-muted);
+        font-family: var(--retro-font);
+        font-size: 20px;
+        padding: 10px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    button.btn-secondary:hover {
+        border-color: var(--text-main);
+        color: var(--text-main);
     }
 
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-    }
-
+    /* Status Messages */
     .status {
-      font-size: 12px;
-      margin-top: 6px;
+      font-family: var(--retro-font);
+      font-size: 16px;
+      margin-top: 12px;
+      min-height: 20px;
     }
 
     .status.error {
       color: var(--danger);
+      animation: shake 0.4s linear;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
     }
 
     .status.success {
       color: var(--success);
     }
 
+    /* Summary Box */
     .summary-box {
-      margin-top: 16px;
-      padding: 24px;
-      border-radius: 10px;
-      background: rgba(9, 32, 20, 0.95);
-      border: 1px solid rgba(101, 214, 145, 0.5);
-      font-size: 13px;
-    }
-
-    .summary-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .chapter-nav {
-      margin-top: 14px;
-      padding-top: 10px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.16);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .chapter-nav p {
-      margin: 0;
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .btn-next {
-      background: transparent;
-      border-radius: 999px;
-      padding: 7px 14px;
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      color: var(--text-main);
-      font-size: 12px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      margin-top: 30px;
+      padding: 30px;
+      border-radius: 12px;
+      background: rgba(16, 185, 129, 0.05);
+      border: 2px dashed rgba(16, 185, 129, 0.3);
+      position: relative;
     }
 
     .tada-container {
         text-align: center;
-        margin-bottom: 16px;
+        margin-bottom: 20px;
     }
     .tada-icon {
-        font-size: 48px;
-        margin-bottom: 8px;
+        font-size: 60px;
         display: inline-block;
-        animation: pop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        animation: pop 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
     @keyframes pop {
         0% { transform: scale(0); opacity: 0; }
         70% { transform: scale(1.2); opacity: 1; }
         100% { transform: scale(1); opacity: 1; }
     }
+    .summary-title {
+      font-family: var(--retro-font);
+      font-size: 24px;
+      color: var(--success);
+      margin-top: 10px;
+    }
+    
     .final-instruction {
         text-align: center;
         color: #a8e6cf;
-        font-size: 14px;
-        margin-bottom: 16px;
+        font-size: 15px;
+        margin-bottom: 20px;
         line-height: 1.5;
     }
-    .final-instruction strong {
-        color: white;
-        font-weight: 700;
-        border-bottom: 1px solid white;
+
+    .final-output {
+      width: 100%;
+      min-height: 200px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: #050714;
+      color: #a8e6cf;
+      font-family: monospace;
+      padding: 16px;
+      font-size: 13px;
+      resize: vertical;
+      white-space: pre-wrap;
+      margin-bottom: 20px;
+    }
+    
+    .chapter-nav {
+        display: flex;
+        justify-content: center;
     }
 
+    /* Character Cards */
     .character-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 12px;
-      margin-bottom: 10px;
+      gap: 16px;
+      margin-bottom: 16px;
     }
 
     .character-card {
       background: var(--card-bg);
       border-radius: var(--radius);
-      padding: 10px 11px 11px;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 13px;
+      font-size: 14px;
     }
 
     .character-name {
-      font-weight: 600;
-      margin-bottom: 2px;
+      font-family: var(--retro-font);
+      font-size: 20px;
+      color: var(--accent);
+      margin-bottom: 4px;
     }
 
     .character-role {
       font-size: 11px;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 8px;
     }
 
     .character-quote {
       font-style: italic;
-      color: var(--text-main);
-      margin-bottom: 4px;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.4;
     }
     
     .character-card .helper-text {
@@ -494,51 +612,127 @@
         opacity: 0.7;
     }
 
+    /* Chart List */
     .chart-list {
       background: var(--bg-alt);
       border-radius: var(--radius);
-      padding: 10px 12px;
+      padding: 16px;
       border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 13px;
+      font-size: 14px;
       color: var(--text-main);
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .chart-item {
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .chart-item:last-child {
+        border-bottom: none;
     }
 
     .chart-label {
       font-weight: 600;
+      color: var(--accent);
     }
 
-    .final-output {
+    /* Final boss shock overlay */
+    .twist-overlay {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #2b0d0d 0, #050005 55%);
+      z-index: 9999;
+    }
+    .twist-card {
+      max-width: 640px;
+      width: 92%;
+      background: #120308;
+      border-radius: 16px;
+      border: 1px solid rgba(255,80,80,0.6);
+      box-shadow: 0 22px 70px rgba(0,0,0,0.85);
+      padding: 30px;
+      text-align: left;
+      animation: shake 0.5s;
+    }
+    .twist-title {
+      font-family: var(--retro-font);
+      font-size: 28px;
+      font-weight: 700;
+      color: #ff7070;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .twist-warning {
+      font-size: 15px;
+      color: #ffb3b3;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .twist-small {
+      font-size: 13px;
+      color: #f5f5f7;
+      margin-bottom: 20px;
+      line-height: 1.5;
+      opacity: 0.8;
+    }
+    .twist-label {
+      font-family: var(--retro-font);
+      font-size: 18px;
+      color: #ffd1d1;
+      margin-bottom: 8px;
+    }
+    .twist-textarea {
       width: 100%;
-      min-height: 160px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      background: #050714;
-      color: var(--text-main);
-      padding: 8px 9px;
-      font-size: 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,180,180,0.4);
+      background: #1b0509;
+      color: #f5f5f7;
+      padding: 12px;
+      font-size: 14px;
+      min-height: 120px;
       resize: vertical;
-      white-space: pre-wrap;
+      font-family: var(--main-font);
+      outline: none;
+    }
+    .twist-textarea:focus {
+        border-color: #ff7070;
+        box-shadow: 0 0 10px rgba(255, 112, 112, 0.2);
+    }
+    .twist-error {
+      font-family: var(--retro-font);
+      font-size: 16px;
+      color: #ff9b9b;
+      margin-top: 8px;
+      display: none;
+    }
+    .twist-note {
+      font-size: 12px;
+      color: #c9c9ff;
+      margin-top: 12px;
+      font-style: italic;
     }
 
     @media (max-width: 640px) {
       .app {
-        padding: 16px 14px 22px;
+        padding: 16px 16px 24px;
       }
+      h1 { font-size: 24px; }
+      .start-title { font-size: 32px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
+  <div class="app" id="main-app">
     <header>
-      <div class="subtitle">Analytics Adventure</div>
+      <div class="subtitle" id="headerSubtitle">Analytics Adventure</div>
       <div class="top-row">
         <h1>
-          <span class="icon">🧭</span>
+          <span class="icon bob-icon">🧭</span>
           <span>The Curious Case of the Vanishing Engagement</span>
         </h1>
         <div class="chapter-tag" id="chapterTag">Briefing</div>
@@ -551,21 +745,27 @@
     <!-- START SCREEN (Chapter 0) -->
     <section id="chapter-0" class="chapter-screen active">
         <div class="start-hero">
-            <span class="start-icon">🕵️‍♀️</span>
+            <span class="start-icon bob-icon">🕵️‍♀️</span>
             <div class="start-title">The Case of the Vanishing Engagement</div>
             <p class="start-desc">
                 Engagement metrics at MUIC have dropped to zero. The logs are corrupted. The stakeholders are panicking.<br><br>
-                Your mission: Analyze the data fragments, navigate conflicting stakeholder opinions, and design a concrete action plan to save the semester.
+                Analyze the data, navigate the politics, and design a plan to save the semester.
             </p>
+            
+            <div class="name-input-container">
+                <input type="text" id="investigatorName" class="name-input" placeholder="Enter Your Name" autocomplete="off">
+            </div>
+            
             <button class="btn-start" id="btnStartGame">Begin Investigation ➡️</button>
+            <div class="status" id="startStatus"></div>
         </div>
     </section>
 
     <!-- CHAPTER 1 -->
     <section id="chapter-1" class="chapter-screen">
       <div class="intro-card">
-        <div class="intro-title">Chapter 1 · The Island of Misleading Metrics 🏝️</div>
-        <p>
+        <div class="intro-title">Chapter 1 · The Island of Misleading Metrics <span class="bob-icon">🏝️</span></div>
+        <p id="ch1IntroText">
           Your analytics ship crashes on the shores of Analytics Island. The sand is
           warm, the Wi-Fi is questionable, and the only things that washed up with you
           are six data fragments.
@@ -577,7 +777,7 @@
         </p>
       </div>
 
-      <div class="section-title">Data fragments on the beach</div>
+      <div class="section-title">Data fragments on the beach <span class="bob-icon">🐚</span></div>
       <div class="metrics-grid" id="metricsGrid"></div>
 
       <div class="task-box">
@@ -594,7 +794,7 @@
 
       <div class="form-group">
         <label for="ch1Justification">Why did you choose this as your anchor metric?</label>
-        <textarea id="ch1Justification"
+        <textarea id="ch1Justification" class="std-input"
           placeholder="Explain in 3–5 sentences why this is your main metric and what story it suggests..."></textarea>
       </div>
 
@@ -614,12 +814,12 @@
 
       <div class="form-group">
         <label>Defense – why your anchor wins</label>
-        <textarea id="ch1Defense" placeholder="Defend your anchor metric as the best lens..."></textarea>
+        <textarea id="ch1Defense" class="std-input" placeholder="Defend your anchor metric as the best lens..."></textarea>
       </div>
       
       <div class="form-group">
         <label>Counter-arguments against other metrics</label>
-        <textarea id="ch1Rebuttal" placeholder="Explain why two alternative anchor metrics would be less useful or misleading..."></textarea>
+        <textarea id="ch1Rebuttal" class="std-input" placeholder="Explain why two alternative anchor metrics would be less useful or misleading..."></textarea>
       </div>
 
       <div class="task-box">
@@ -638,7 +838,7 @@
     <!-- CHAPTER 2 -->
     <section id="chapter-2" class="chapter-screen">
       <div class="intro-card">
-        <div class="intro-title">Chapter 2 · The Council of Conflicting Stakeholders 🏛️</div>
+        <div class="intro-title">Chapter 2 · The Council of Conflicting Stakeholders <span class="bob-icon">🏛️</span></div>
         <p>
           You climb the hill and meet three powerful voices arguing about what your anchor metric “really” means.
           Your job is to decide who helps you tell a useful story, not just who is the loudest.
@@ -646,11 +846,11 @@
         <p style="margin-top:6px;">Start by reminding yourself what you picked in Chapter 1.</p>
       </div>
 
-      <div class="section-title">Stakeholders on the hill</div>
+      <div class="section-title">Stakeholders on the hill <span class="bob-icon">⛰️</span></div>
       <div class="character-grid">
         <div class="character-card">
-          <div class="character-role">Dean of Panic</div>
-          <div class="character-name">“We are losing reputation.”</div>
+          <div class="character-name">Dean of Panic</div>
+          <div class="character-role">“We are losing reputation.”</div>
           <div class="character-quote">
             “Engagement is down? This is catastrophic. Fix it immediately. I don’t want
             excuses; I want a strong, simple answer.”
@@ -660,8 +860,8 @@
           </div>
         </div>
         <div class="character-card">
-          <div class="character-role">Marketing Pirate</div>
-          <div class="character-name">“The numbers look fine.”</div>
+          <div class="character-name">Marketing Pirate</div>
+          <div class="character-role">“The numbers look fine.”</div>
           <div class="character-quote">
             “Reach is up, followers are up, everything looks great. Students are just
             busy with exams. We don’t need to change anything.”
@@ -671,8 +871,8 @@
           </div>
         </div>
         <div class="character-card">
-          <div class="character-role">Student Ghost</div>
-          <div class="character-name">“It’s not for us.”</div>
+          <div class="character-name">Student Ghost</div>
+          <div class="character-role">“It’s not for us.”</div>
           <div class="character-quote">
             “I see your posts but I don’t really care. They feel generic and not really
             about student life.”
@@ -692,7 +892,7 @@
 
       <div class="form-group">
         <label>Most analytically useful perspective</label>
-        <select id="ch2Useful">
+        <select id="ch2Useful" class="std-input">
           <option value="">Select one…</option>
           <option value="dean">Dean of Panic</option>
           <option value="marketing">Marketing Pirate</option>
@@ -702,7 +902,7 @@
 
       <div class="form-group">
         <label>Most emotion-driven perspective</label>
-        <select id="ch2Emotional">
+        <select id="ch2Emotional" class="std-input">
           <option value="">Select one…</option>
           <option value="dean">Dean of Panic</option>
           <option value="marketing">Marketing Pirate</option>
@@ -712,7 +912,7 @@
 
       <div class="form-group">
         <label>Most misleading perspective</label>
-        <select id="ch2Misleading">
+        <select id="ch2Misleading" class="std-input">
           <option value="">Select one…</option>
           <option value="dean">Dean of Panic</option>
           <option value="marketing">Marketing Pirate</option>
@@ -729,25 +929,25 @@
 
       <div class="form-group">
         <label>“What is” – current state</label>
-        <textarea id="ch2WhatIs"
+        <textarea id="ch2WhatIs" class="std-input"
           placeholder="Describe the current reality as your data suggests it."></textarea>
       </div>
 
       <div class="form-group">
         <label>Conflict / tension</label>
-        <textarea id="ch2Conflict"
+        <textarea id="ch2Conflict" class="std-input"
           placeholder="What’s the main problem, mismatch, or risk?"></textarea>
       </div>
 
       <div class="form-group">
         <label>Insight – turning point</label>
-        <textarea id="ch2Insight"
+        <textarea id="ch2Insight" class="std-input"
           placeholder="What key insight changes how we understand the situation?"></textarea>
       </div>
 
       <div class="form-group">
         <label>“What could be” – improved future</label>
-        <textarea id="ch2CouldBe"
+        <textarea id="ch2CouldBe" class="std-input"
           placeholder="What realistic, improved future becomes possible?"></textarea>
       </div>
       
@@ -761,15 +961,15 @@
       
       <div class="form-group">
           <label>Insight from the Dean’s perspective</label>
-          <textarea id="ch2InsightDean" placeholder="Short, strong, risk-focused."></textarea>
+          <textarea id="ch2InsightDean" class="std-input" placeholder="Short, strong, risk-focused."></textarea>
       </div>
       <div class="form-group">
           <label>Insight from the Marketing Pirate’s perspective</label>
-          <textarea id="ch2InsightPirate" placeholder="Defensive spin on the strategy."></textarea>
+          <textarea id="ch2InsightPirate" class="std-input" placeholder="Defensive spin on the strategy."></textarea>
       </div>
       <div class="form-group">
           <label>Insight from the Student Ghost’s perspective</label>
-          <textarea id="ch2InsightStudent" placeholder="Bored, annoyed, or unimpressed."></textarea>
+          <textarea id="ch2InsightStudent" class="std-input" placeholder="Bored, annoyed, or unimpressed."></textarea>
       </div>
 
       <div class="task-box">
@@ -788,7 +988,7 @@
     <!-- CHAPTER 3 -->
     <section id="chapter-3" class="chapter-screen">
       <div class="intro-card">
-        <div class="intro-title">Chapter 3 · The Temple of Missing Context 🗿</div>
+        <div class="intro-title">Chapter 3 · The Temple of Missing Context <span class="bob-icon">🗿</span></div>
         <p>
           Deeper inside the island, you find three impressive-looking charts carved into stone. 
           They would look great in a slide deck. They are also terrible.
@@ -798,7 +998,7 @@
         </p>
       </div>
 
-      <div class="section-title">Ancient charts on the wall</div>
+      <div class="section-title">Ancient charts on the wall <span class="bob-icon">📜</span></div>
       <div class="chart-list">
         <div class="chart-item">
           <span class="chart-label">Chart A:</span> Bar chart titled
@@ -825,7 +1025,7 @@
 
       <div class="form-group">
         <label>Which chart did you pick?</label>
-        <select id="ch3ChartChoice">
+        <select id="ch3ChartChoice" class="std-input">
           <option value="">Select one…</option>
           <option value="A">Chart A – Engagement by Month</option>
           <option value="B">Chart B – Posts vs Applications</option>
@@ -835,13 +1035,13 @@
 
       <div class="form-group">
         <label>Step 2 – What context is missing or unclear?</label>
-        <textarea id="ch3Missing"
+        <textarea id="ch3Missing" class="std-input"
           placeholder="Describe exactly what information is missing: labels, timeframe, causality, definitions..."></textarea>
       </div>
 
       <div class="form-group">
         <label>Step 3 – Rewrite: what should this chart honestly say?</label>
-        <textarea id="ch3Rewrite"
+        <textarea id="ch3Rewrite" class="std-input"
           placeholder="Write a more honest interpretation, as if annotating for a stakeholder."></textarea>
       </div>
       
@@ -856,7 +1056,7 @@
       
       <div class="form-group">
           <label>Describe your honest and evil versions</label>
-          <textarea id="ch3Mockup" placeholder="Describe the changes in your honest version, and then explain the tricks used in your 'evil' version."></textarea>
+          <textarea id="ch3Mockup" class="std-input" placeholder="Describe the changes in your honest version, and then explain the tricks used in your 'evil' version."></textarea>
       </div>
 
       <div class="task-box">
@@ -875,7 +1075,7 @@
     <!-- CHAPTER 4 -->
     <section id="chapter-4" class="chapter-screen">
       <div class="intro-card">
-        <div class="intro-title">Chapter 4 · The Final Gate – Action Engine 🔮</div>
+        <div class="intro-title">Chapter 4 · The Final Gate – Action Engine <span class="bob-icon">🔮</span></div>
         <p>
           You reach the final gate. The guardian asks only one question:
           <br><br>
@@ -895,7 +1095,7 @@
       
       <div class="form-group">
           <label>Story recap (anchor + insight + risk/opportunity)</label>
-          <textarea id="ch4StoryRecap" placeholder="Write 2–3 sentences summarizing your findings so far..."></textarea>
+          <textarea id="ch4StoryRecap" class="std-input" placeholder="Write 2–3 sentences summarizing your findings so far..."></textarea>
       </div>
 
       <div class="task-box">
@@ -907,25 +1107,25 @@
 
       <div class="form-group">
         <label>Motivation – why would the stakeholder want to do this?</label>
-        <textarea id="ch4Motivation"
+        <textarea id="ch4Motivation" class="std-input"
           placeholder="What pain are you reducing, or what positive outcome are you creating?"></textarea>
       </div>
 
       <div class="form-group">
         <label>Ability – how do you make the action easy?</label>
-        <textarea id="ch4Ability"
+        <textarea id="ch4Ability" class="std-input"
           placeholder="Reduce friction: time, complexity, approvals, budget, steps."></textarea>
       </div>
 
       <div class="form-group">
         <label>Prompt – what triggers the action at the right moment?</label>
-        <textarea id="ch4Prompt"
+        <textarea id="ch4Prompt" class="std-input"
           placeholder="Specify a moment + channel (e.g., weekly meeting, email report)."></textarea>
       </div>
 
       <div class="form-group">
         <label>Step 3 – Final action statement</label>
-        <textarea id="ch4Action"
+        <textarea id="ch4Action" class="std-input"
           placeholder="Combine everything into one clear sentence."></textarea>
       </div>
       
@@ -942,12 +1142,12 @@
       
       <div class="form-group">
           <label>Your self-review notes</label>
-          <textarea id="ch4Feedback" placeholder="Notes on clarity, realism, and prompt timing based on the questions above."></textarea>
+          <textarea id="ch4Feedback" class="std-input" placeholder="Notes on clarity, realism, and prompt timing based on the questions above."></textarea>
       </div>
       
       <div class="form-group">
           <label>Step 5 – Revised final action (after self-review)</label>
-          <textarea id="ch4RevisedAction" placeholder="Rewrite your action statement to make it clearer and more realistic."></textarea>
+          <textarea id="ch4RevisedAction" class="std-input" placeholder="Rewrite your action statement to make it clearer and more realistic."></textarea>
       </div>
 
       <div class="task-box">
@@ -958,35 +1158,173 @@
       </div>
 
       <div class="btn-row">
-        <button class="btn-primary" id="ch4Submit">✅ Finish Adventure & Generate Summary</button>
+        <button class="btn-primary" id="ch4Submit">✅ Submit Chapter 4</button>
       </div>
       <div class="status" id="ch4Status"></div>
+    </section>
 
-      <div class="summary-box" id="ch4Summary" style="display:none;">
+    <!-- CHAPTER 5 -->
+    <section id="chapter-5" class="chapter-screen">
+      <div class="intro-card">
+        <div class="intro-title">Chapter 5 · Final Boss: MUIC Council Challenge <span class="bob-icon">🐉</span></div>
+        <p>
+          You’ve survived the island. Now you enter the MUIC council room.
+          The final boss is simple and brutal: <strong>Can you turn all of this into one coherent, defendable story?</strong>
+        </p>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 1 – Insight-to-Action Blueprint <span class="bob-icon">🗺️</span></div>
+        <div class="task-text">
+          Combine everything from Chapters 1–4 into one compact blueprint. Imagine briefing a busy stakeholder in 3 minutes.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>1. Anchor metric & trend (island case)</label>
+        <textarea id="ch5AnchorRecap" class="std-input"
+          placeholder="In 3–5 sentences, recap your chosen anchor metric and what the trend tells you about engagement."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>2. Story arc (what is → conflict → insight → what could be)</label>
+        <textarea id="ch5StoryArcRecap" class="std-input"
+          placeholder="In 6–8 sentences, tell the narrative backbone: current state, problem, insight, and better future."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>3. Chart you would show (describe your honest vs evil work)</label>
+        <textarea id="ch5ChartRecap" class="std-input"
+          placeholder="Describe the chart type, why the scale/context is honest, and how it supports your insight."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>4. Behavior you recommend (Fogg B=MAP)</label>
+        <textarea id="ch5BehaviorRecap" class="std-input"
+          placeholder="Summarize the concrete behavior, including who should do what, when, and why it's realistic."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 2 – The council pushes back</div>
+        <div class="task-text">
+          Three familiar voices challenge you. Write your short, calm response to each.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="mini-label">Dean of Panic – objection & your response</div>
+        <textarea id="ch5DeanObjection" class="std-input"
+          placeholder="Write 1–2 sentences for the Dean’s objection, and 2–3 sentences for your reply."></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="mini-label">Marketing Pirate – objection & your response</div>
+        <textarea id="ch5PirateObjection" class="std-input"
+          placeholder="Write 1–2 sentences where the Pirate defends status quo, and 2–3 sentences where you answer."></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="mini-label">Student Ghost – objection & your response</div>
+        <textarea id="ch5StudentObjection" class="std-input"
+          placeholder="Write 1–2 sentences where a student is still bored, and your adjustment/explanation."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 3 – Connect the island to your real project</div>
+        <div class="task-text">
+          Switch from the fictional MUIC island case to your own final project topic.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Real project metric & early insight</label>
+        <textarea id="ch5RealMetric" class="std-input"
+          placeholder="Name one metric from your project and write 3–5 sentences about what it might reveal."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Draft story + action for your real project</label>
+        <textarea id="ch5RealDraft" class="std-input"
+          placeholder="In 6–8 sentences, sketch a possible story arc and one behavior you might recommend later."></textarea>
+      </div>
+
+      <div class="task-box">
+        <div class="task-title">Step 4 – Self-check</div>
+        <div class="task-text">
+          Quickly self-review your work. Is it clear to a non-analytics person?
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Short reflection</label>
+        <textarea id="ch5Reflection" class="std-input"
+          placeholder="In 5–7 sentences, reflect on what you learned about turning data into a story with a clear action."></textarea>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn-primary" onclick="triggerFinalBoss()">Finish Quest</button>
+        <button class="btn-secondary" onclick="window.print()">🖨️ Print / Save as PDF</button>
+      </div>
+
+      <div class="status" id="ch5Status"></div>
+
+      <div class="summary-box" id="ch5Summary" style="display:none;">
         <div class="tada-container">
-            <div class="tada-icon">🎉</div>
-            <div class="summary-title" style="font-size: 16px; color: #7ddc8a;">Mission Accomplished!</div>
+            <div class="tada-icon"><span class="bob-icon">🎉</span></div>
+            <div class="summary-title" style="font-size: 20px; color: #7ddc8a;">Mission Accomplished!</div>
         </div>
         <p class="final-instruction">
-            Great job, Investigator. Your analysis is complete.<br>
+            Great job, Investigator <strong id="finalNameDisplay"></strong>. Your analysis is complete.<br>
             Please copy the report below and paste it into the <strong>Google Classroom</strong> assignment.
         </p>
         <textarea class="final-output" id="finalOutput" readonly></textarea>
         <div class="chapter-nav" style="justify-content: center;">
-          <button class="btn-next" id="copyOutput" style="background: #7ddc8a; color: #092014; border: none; font-weight: 700;">
+          <button class="btn-next" id="copyOutput" style="background: #7ddc8a; color: #092014; border: none; font-weight: 700; font-family: var(--retro-font); font-size: 20px; padding: 12px 30px;">
             Copy Report to Clipboard 📋
           </button>
         </div>
       </div>
     </section>
+
+  </div>
+
+  <!-- Final boss shock overlay -->
+  <div class="twist-overlay" id="twist-overlay">
+    <div class="twist-card">
+      <div class="twist-title">⚠️ SYSTEM FAILURE: ISLAND MEMORY WIPE</div>
+      <p class="twist-warning">
+        Analytics Island just glitched. All visible answers on this page have been wiped from
+        the interface.
+      </p>
+      <p class="twist-small">
+        The good news: a hidden backup of your work still exists deep in the system.  
+        The bad news: the gatekeeper will only release it if you complete one final task.
+      </p>
+      <p class="twist-label">
+        Final task – Meta reflection (minimum ~200 characters):
+      </p>
+      <textarea id="finalTaskAnswer" class="twist-textarea"
+        placeholder="Explain, in detail, what you think is the single most important principle for turning data into a persuasive story that leads to action at MUIC. Connect it to at least one concept from the earlier chapters (anchor metrics, stakeholders, honest charts, or Fogg B=MAP)."></textarea>
+      <div id="twist-error" class="twist-error">
+        Your answer is too short to unlock the backup. Add more detail, examples, or explanation.
+      </div>
+      <p class="twist-note">
+        When you complete this task, the system will restore your answers and generate a combined
+        export block you can copy into your assignment.
+      </p>
+      <div class="btn-row">
+        <button class="btn-primary" onclick="restoreFromFinalBoss()">Unlock &amp; Restore My Work</button>
+      </div>
+    </div>
   </div>
 
   <script>
     // Global state
     let currentChapter = 0;
-    const totalChapters = 4;
+    const totalChapters = 5;
 
     const state = {
+      investigatorName: "",
       // CH1
       anchorMetricId: null,
       anchorMetricText: "",
@@ -1016,11 +1354,23 @@
       actionPrompt: "",
       actionStatement: "",
       feedbackReceived: "",
-      revisedAction: ""
+      revisedAction: "",
+      // CH5
+      ch5AnchorRecap: "",
+      ch5StoryArcRecap: "",
+      ch5ChartRecap: "",
+      ch5BehaviorRecap: "",
+      ch5DeanObjection: "",
+      ch5PirateObjection: "",
+      ch5StudentObjection: "",
+      ch5RealMetric: "",
+      ch5RealDraft: "",
+      ch5Reflection: ""
     };
 
     const chapterTag = document.getElementById("chapterTag");
     const progressFill = document.getElementById("progressFill");
+    const headerSubtitle = document.getElementById("headerSubtitle");
 
     function updateChapterUI() {
       document.querySelectorAll(".chapter-screen").forEach((ch) => {
@@ -1037,16 +1387,36 @@
           const pct = (currentChapter - 1) / (totalChapters - 1 || 1) * 100;
           progressFill.style.width = `${pct}%`;
       }
+      // Scroll to top on chapter change
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function goToChapter(n) {
       currentChapter = n;
       updateChapterUI();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     
     // Start Screen Logic
-    document.getElementById("btnStartGame").addEventListener("click", () => {
+    const btnStartGame = document.getElementById("btnStartGame");
+    const nameInput = document.getElementById("investigatorName");
+    const startStatus = document.getElementById("startStatus");
+
+    btnStartGame.addEventListener("click", () => {
+        const name = nameInput.value.trim();
+        if (name.length < 2) {
+            startStatus.textContent = "Please enter your name, Investigator.";
+            startStatus.className = "status error";
+            return;
+        }
+        state.investigatorName = name;
+        
+        // Personalize
+        headerSubtitle.textContent = `Investigator: ${name}`;
+        document.getElementById("ch1IntroText").innerHTML = `
+          Welcome, <strong>Investigator ${name}</strong>. Your analytics ship crashes on the shores of Analytics Island. 
+          The sand is warm, the Wi-Fi is questionable, and the only things that washed up with you are six data fragments.
+        `;
+        
         goToChapter(1);
     });
 
@@ -1066,7 +1436,6 @@
     const ch1Rebuttal = document.getElementById("ch1Rebuttal");
     const ch1Submit = document.getElementById("ch1Submit");
     const ch1Status = document.getElementById("ch1Status");
-    const toCh2Btn = document.getElementById("toCh2");
     let selectedMetricId = null;
 
     function renderMetrics() {
@@ -1216,7 +1585,7 @@
       state.ch3Rewrite = rewrite;
       state.ch3Mockup = mockup;
 
-      ch3Status.textContent = "Chapter 3 submitted. Unlocking Final Chapter...";
+      ch3Status.textContent = "Chapter 3 submitted. Unlocking Chapter 4...";
       ch3Status.className = "status success";
       setTimeout(() => {
           // Fill Chapter 4 anchor preview
@@ -1244,9 +1613,6 @@
     const ch4RevisedAction = document.getElementById("ch4RevisedAction");
     const ch4Submit = document.getElementById("ch4Submit");
     const ch4Status = document.getElementById("ch4Status");
-    const ch4Summary = document.getElementById("ch4Summary");
-    const finalOutput = document.getElementById("finalOutput");
-    const copyOutputBtn = document.getElementById("copyOutput");
 
     function submitCh4() {
       const recap = ch4StoryRecap.value.trim();
@@ -1271,55 +1637,155 @@
       state.feedbackReceived = fb;
       state.revisedAction = rev;
 
-      // Build final output text
-      const lines = [];
-      lines.push("=== THE CURIOUS CASE OF THE VANISHING ENGAGEMENT: SOLO REPORT ===");
-      lines.push("");
-      
-      lines.push("--- 1. ANCHOR METRIC ---");
-      lines.push(`Metric: ${state.anchorMetricId ? `${state.anchorMetricId}: ${state.anchorMetricText}` : "(none)"}`);
-      lines.push(`Justification: ${state.anchorJustification}`);
-      lines.push(`Defense: ${state.anchorDefense}`);
-      lines.push(`Counter-arguments: ${state.anchorRebuttal}`);
-      lines.push("");
-
-      lines.push("--- 2. STORY ARC & STAKEHOLDERS ---");
-      lines.push(`What is: ${state.storyWhatIs}`);
-      lines.push(`Conflict: ${state.storyConflict}`);
-      lines.push(`Insight: ${state.storyInsight}`);
-      lines.push(`What could be: ${state.storyCouldBe}`);
-      lines.push(`Dean's Voice: ${state.insightDean}`);
-      lines.push(`Pirate's Voice: ${state.insightPirate}`);
-      lines.push(`Student's Voice: ${state.insightStudent}`);
-      lines.push("");
-
-      lines.push("--- 3. DATA CONTEXT (CHART) ---");
-      lines.push(`Chart Choice: ${state.ch3ChartChoice}`);
-      lines.push(`Missing Context: ${state.ch3Missing}`);
-      lines.push(`Honest Rewrite: ${state.ch3Rewrite}`);
-      lines.push(`Honest vs Evil Description: ${state.ch3Mockup}`);
-      lines.push("");
-
-      lines.push("--- 4. ACTION ENGINE (FOGG B=MAP) ---");
-      lines.push(`Motivation: ${state.actionMotivation}`);
-      lines.push(`Ability: ${state.actionAbility}`);
-      lines.push(`Prompt: ${state.actionPrompt}`);
-      lines.push(`Initial Action: ${state.actionStatement}`);
-      lines.push(`Self-Review Notes: ${state.feedbackReceived}`);
-      lines.push(`FINAL REVISED ACTION: ${state.revisedAction}`);
-
-      finalOutput.value = lines.join("\n");
-      ch4Summary.style.display = "block";
-      
-      setTimeout(() => {
-        ch4Summary.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-
-      ch4Status.textContent = "Adventure complete!";
+      ch4Status.textContent = "Chapter 4 submitted. Unlocking Final Boss...";
       ch4Status.className = "status success";
+      setTimeout(() => goToChapter(5), 1000);
     }
 
     ch4Submit.addEventListener("click", submitCh4);
+
+    // CHAPTER 5 Logic (WITH TWIST)
+    const ch5AnchorRecap = document.getElementById("ch5AnchorRecap");
+    const ch5StoryArcRecap = document.getElementById("ch5StoryArcRecap");
+    const ch5ChartRecap = document.getElementById("ch5ChartRecap");
+    const ch5BehaviorRecap = document.getElementById("ch5BehaviorRecap");
+    const ch5DeanObjection = document.getElementById("ch5DeanObjection");
+    const ch5PirateObjection = document.getElementById("ch5PirateObjection");
+    const ch5StudentObjection = document.getElementById("ch5StudentObjection");
+    const ch5RealMetric = document.getElementById("ch5RealMetric");
+    const ch5RealDraft = document.getElementById("ch5RealDraft");
+    const ch5Reflection = document.getElementById("ch5Reflection");
+    const ch5Status = document.getElementById("ch5Status");
+    const ch5Summary = document.getElementById("ch5Summary");
+    const finalOutput = document.getElementById("finalOutput");
+    const copyOutputBtn = document.getElementById("copyOutput");
+    const finalNameDisplay = document.getElementById("finalNameDisplay");
+
+    // Twist variables
+    let analyticsBackup = null;
+
+    function triggerFinalBoss() {
+      const anchorR = ch5AnchorRecap.value.trim();
+      const storyR = ch5StoryArcRecap.value.trim();
+      const chartR = ch5ChartRecap.value.trim();
+      const behaveR = ch5BehaviorRecap.value.trim();
+      const deanObj = ch5DeanObjection.value.trim();
+      const pirateObj = ch5PirateObjection.value.trim();
+      const studentObj = ch5StudentObjection.value.trim();
+      const realMet = ch5RealMetric.value.trim();
+      const realD = ch5RealDraft.value.trim();
+      const reflect = ch5Reflection.value.trim();
+
+      if (anchorR.length < 5 || storyR.length < 5 || chartR.length < 5 || behaveR.length < 5 || 
+          deanObj.length < 5 || pirateObj.length < 5 || studentObj.length < 5 || 
+          realMet.length < 5 || realD.length < 5 || reflect.length < 5) {
+          ch5Status.textContent = "Please complete all fields in the Final Boss challenge.";
+          ch5Status.className = "status error";
+          return;
+      }
+
+      // SAVE TO STATE
+      state.ch5AnchorRecap = anchorR;
+      state.ch5StoryArcRecap = storyR;
+      state.ch5ChartRecap = chartR;
+      state.ch5BehaviorRecap = behaveR;
+      state.ch5DeanObjection = deanObj;
+      state.ch5PirateObjection = pirateObj;
+      state.ch5StudentObjection = studentObj;
+      state.ch5RealMetric = realMet;
+      state.ch5RealDraft = realD;
+      state.ch5Reflection = reflect;
+
+      // WIPE UI (THE GLITCH)
+      ch5AnchorRecap.value = "";
+      ch5StoryArcRecap.value = "";
+      ch5ChartRecap.value = "";
+      ch5BehaviorRecap.value = "";
+      ch5DeanObjection.value = "";
+      ch5PirateObjection.value = "";
+      ch5StudentObjection.value = "";
+      ch5RealMetric.value = "";
+      ch5RealDraft.value = "";
+      ch5Reflection.value = "";
+
+      // SHOW OVERLAY
+      document.getElementById('twist-overlay').style.display = 'flex';
+    }
+
+    function restoreFromFinalBoss() {
+      const answerEl = document.getElementById('finalTaskAnswer');
+      const errorEl = document.getElementById('twist-error');
+      const answer = (answerEl.value || '').trim();
+
+      // Validation
+      if (answer.length < 20) { // Keep it relatively easy to trigger
+        errorEl.style.display = 'block';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      // RESTORE UI
+      ch5AnchorRecap.value = state.ch5AnchorRecap;
+      ch5StoryArcRecap.value = state.ch5StoryArcRecap;
+      ch5ChartRecap.value = state.ch5ChartRecap;
+      ch5BehaviorRecap.value = state.ch5BehaviorRecap;
+      ch5DeanObjection.value = state.ch5DeanObjection;
+      ch5PirateObjection.value = state.ch5PirateObjection;
+      ch5StudentObjection.value = state.ch5StudentObjection;
+      ch5RealMetric.value = state.ch5RealMetric;
+      ch5RealDraft.value = state.ch5RealDraft;
+      ch5Reflection.value = state.ch5Reflection;
+
+      // HIDE OVERLAY
+      document.getElementById('twist-overlay').style.display = 'none';
+
+      // GENERATE FINAL REPORT
+      finalNameDisplay.textContent = state.investigatorName;
+
+      const lines = [];
+      lines.push(`=== THE CURIOUS CASE OF THE VANISHING ENGAGEMENT: FINAL REPORT ===`);
+      lines.push(`INVESTIGATOR: ${state.investigatorName.toUpperCase()}`);
+      lines.push("");
+      
+      lines.push("--- PART A: THE ISLAND BLUEPRINT ---");
+      lines.push(`Anchor Metric: ${state.ch5AnchorRecap}`);
+      lines.push(`Story Arc: ${state.ch5StoryArcRecap}`);
+      lines.push(`Chart Strategy: ${state.ch5ChartRecap}`);
+      lines.push(`Recommended Behavior: ${state.ch5BehaviorRecap}`);
+      lines.push("");
+
+      lines.push("--- PART B: DEFENDING THE STRATEGY ---");
+      lines.push(`Response to Dean: ${state.ch5DeanObjection}`);
+      lines.push(`Response to Pirate: ${state.ch5PirateObjection}`);
+      lines.push(`Response to Student: ${state.ch5StudentObjection}`);
+      lines.push("");
+
+      lines.push("--- PART C: REAL PROJECT CONNECTION ---");
+      lines.push(`My Project Metric: ${state.ch5RealMetric}`);
+      lines.push(`Draft Story/Action: ${state.ch5RealDraft}`);
+      lines.push(`Final Reflection: ${state.ch5Reflection}`);
+      lines.push("");
+      
+      lines.push("--- PART D: THE META REFLECTION ---");
+      lines.push(`Final Principle: ${answer}`);
+      lines.push("");
+
+      lines.push("--- APPENDIX: RAW NOTES FROM ADVENTURE ---");
+      lines.push(`Ch1 Defense: ${state.anchorDefense}`);
+      lines.push(`Ch2 Insight (Dean): ${state.insightDean}`);
+      lines.push(`Ch3 Honest vs Evil: ${state.ch3Mockup}`);
+      lines.push(`Ch4 Self-Review: ${state.feedbackReceived}`);
+
+      finalOutput.value = lines.join("\n");
+      ch5Summary.style.display = "block";
+      
+      setTimeout(() => {
+        ch5Summary.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+
+      ch5Status.textContent = "Adventure complete!";
+      ch5Status.className = "status success";
+    }
 
     copyOutputBtn.addEventListener("click", async () => {
       try {
@@ -1332,8 +1798,8 @@
              copyOutputBtn.style.background = "#7ddc8a";
         }, 2000);
       } catch (e) {
-        ch4Status.textContent = "Could not copy automatically. Please select and copy manually.";
-        ch4Status.className = "status error";
+        ch5Status.textContent = "Could not copy automatically. Please select and copy manually.";
+        ch5Status.className = "status error";
       }
     });
 
